@@ -8,13 +8,18 @@
 
 import UIKit
 import AVFoundation
+import MediaPlayer
 
 class ViewController: UIViewController {
 
+    // Recording music
     @IBOutlet weak var recordButton: UIButton!
     var recordingSession: AVAudioSession!
-    
     var audioRecorder: AVAudioRecorder!
+    
+    // Choosing existing music from itunes
+    var mediaPicker: MPMediaPickerController?
+    var myMusicPlayer: MPMusicPlayerController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +96,25 @@ class ViewController: UIViewController {
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
+    
+    func displayMediaPickerAndPlayItem(){
+        mediaPicker = MPMediaPickerController(mediaTypes: .anyAudio)
+        
+        if let picker = mediaPicker{
+            picker.delegate = self
+            view.addSubview(picker.view)
+            self.present(picker, animated: true, completion: nil)
+        }
+        else
+        {
+            self.presentMessage(title: "Error", message: "Couldn't instantiate a media picker")
+        }
+    }
+    
+    @IBAction func openItunesLibrary(_ sender: UIButton) {
+        displayMediaPickerAndPlayItem()
+    }
+    
 
 }
 
@@ -100,6 +124,22 @@ extension ViewController: AVAudioRecorderDelegate{
             finishRecording(success: false)
         }
     }
+}
+
+extension ViewController: MPMediaPickerControllerDelegate{
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        myMusicPlayer = MPMusicPlayerController()
+        
+        if let player = myMusicPlayer{
+            player.beginGeneratingPlaybackNotifications()
+            player.setQueue(with: mediaItemCollection)
+            player.play()
+            
+            mediaPicker.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    
 }
 
 extension UIViewController{
