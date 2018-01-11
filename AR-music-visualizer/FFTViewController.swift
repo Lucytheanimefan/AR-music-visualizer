@@ -1,27 +1,54 @@
 //
-//  MusicLoader.swift
+//  FFTViewController.swift
 //  AR-music-visualizer
 //
 //  Created by Lucy Zhang on 1/11/18.
 //  Copyright © 2018 Lucy Zhang. All rights reserved.
 //
 
+import UIKit
 import AVFoundation
 import Accelerate
-import os.log
+import MediaPlayer
 
-class MusicLoader: NSObject {
+class FFTViewController: UIViewController {
 
     var audioEngine = AVAudioEngine()
     var audioNode = AVAudioPlayerNode()
-    
     var magnitudes:[Float]!
     
-    var file:URL!
+    var mediaPicker: MPMediaPickerController?
+    var myMusicPlayer: MPMusicPlayerController?
     
-    override init() {
-        super.init()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
         audioEngine.attach(audioNode)
+        
+        
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func displayMediaPicker(){
+        mediaPicker = MPMediaPickerController(mediaTypes: .anyAudio)
+        
+        if let picker = mediaPicker{
+            picker.delegate = self
+            view.addSubview(picker.view)
+            self.present(picker, animated: true, completion: nil)
+        }
+        else
+        {
+            self.presentMessage(title: "Error", message: "Couldn't instantiate a media picker")
+        }
+    }
+    
+    @IBAction func openItunesLibrary(_ sender: UIButton) {
+        displayMediaPicker()
     }
     
     func begin(file:URL){
@@ -37,7 +64,7 @@ class MusicLoader: NSObject {
             retrieveAudioBuffer()
         }
     }
-
+    
     func retrieveAudioBuffer(){
         let size: UInt32 = 1024
         let mixerNode = audioEngine.mainMixerNode
@@ -157,25 +184,45 @@ class MusicLoader: NSObject {
         
         return results
     }
-    
-    
+
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }
 
-extension String {
-    
-    func fileName() -> String {
-        if let fileNameWithoutExtension = NSURL(fileURLWithPath: self).deletingPathExtension?.lastPathComponent {
-            return fileNameWithoutExtension
+extension FFTViewController: MPMediaPickerControllerDelegate{
+    func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
+        myMusicPlayer = MPMusicPlayerController()
+        print(mediaItemCollection)
+        if let player = myMusicPlayer{
+            //player.beginGeneratingPlaybackNotifications()
+            //player.setQueue(with: mediaItemCollection)
+            //player.play()
+            
+            // Get the file
+            let musicItem = mediaItemCollection.items[0]
+            if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
+            {
+                //self.debugView.text = assetURL.absoluteString
+               self.begin(file: assetURL)
+                
+                
+                
+                //self.debugView.text.append(musicLoader.magnitudes.description)
+            }
+            
+            
+            mediaPicker.dismiss(animated: true, completion: nil)
         }
-        return ""
     }
     
-    func fileExtension() -> String {
-        
-        if let fileExtension = NSURL(fileURLWithPath: self).pathExtension {
-            return fileExtension
-        }
-        return ""
-        
-    }
+    
 }
