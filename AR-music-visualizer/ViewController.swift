@@ -10,6 +10,8 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
+import os.log
+
 class ViewController: UIViewController {
 
     // Recording music
@@ -20,6 +22,10 @@ class ViewController: UIViewController {
     // Choosing existing music from itunes
     var mediaPicker: MPMediaPickerController?
     var myMusicPlayer: MPMusicPlayerController?
+    
+
+    @IBOutlet weak var debugView: UITextView!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -129,12 +135,19 @@ extension ViewController: AVAudioRecorderDelegate{
 extension ViewController: MPMediaPickerControllerDelegate{
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         myMusicPlayer = MPMusicPlayerController()
-        
+        print(mediaItemCollection)
         if let player = myMusicPlayer{
             player.beginGeneratingPlaybackNotifications()
             player.setQueue(with: mediaItemCollection)
-            player.play()
             
+            //player.play()
+            
+            // Get the file
+            let musicItem = mediaItemCollection.items[0]
+            if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
+            {
+                self.debugView.text = assetURL.absoluteString
+            }
             mediaPicker.dismiss(animated: true, completion: nil)
         }
     }
