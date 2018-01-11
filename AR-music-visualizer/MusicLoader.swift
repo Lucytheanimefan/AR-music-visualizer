@@ -8,6 +8,7 @@
 
 import AVFoundation
 import Accelerate
+import os.log
 
 class MusicLoader: NSObject {
 
@@ -16,11 +17,11 @@ class MusicLoader: NSObject {
     
     var magnitudes:[Float]!
     
-    init(fileName:String) {
+    init(filePath:URL) {
         audioEngine.attach(audioNode)
 
-        guard let url = Bundle.main.url(forResource: fileName.fileName(), withExtension: fileName.fileExtension()) else { return }
-        guard let audioFile = try? AVAudioFile(forReading: url) else { return }
+        guard let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav") else { return }
+        guard let audioFile = try? AVAudioFile(forReading: /*filePath*/ url) else { return }
         if let buffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat,
                                          frameCapacity: AVAudioFrameCount(audioFile.length)){
             try? audioFile.read(into: buffer)
@@ -39,9 +40,17 @@ class MusicLoader: NSObject {
                              format: mixerNode.outputFormat(forBus: 0)) { (buffer, time) in
                                 self.performFFT(buffer: buffer)
         }
+        
+        audioEngine.prepare()
+        do{
+            try audioEngine.start()
+        } catch{
+            os_log("%@: Error starting audio engineL %@", self.description, error.localizedDescription)
+        }
     }
     
     func performFFT(buffer: AVAudioPCMBuffer) {
+        print("Perform FFT")
         let frameCount = buffer.frameLength
         let log2n = UInt(round(log2(Double(frameCount))))
         let bufferSizePOT = Int(1 << log2n)
@@ -81,6 +90,7 @@ class MusicLoader: NSObject {
                    &normalizedMagnitudes, 1, vDSP_Length(inputCount))
         
         self.magnitudes = magnitudes
+        os_log("%@: FFT magnitudes: %@", self.description, magnitudes)
         vDSP_destroy_fftsetup(fftSetup)
     }
     
@@ -97,12 +107,10 @@ class MusicLoader: NSObject {
 extension String {
     
     func fileName() -> String {
-        
         if let fileNameWithoutExtension = NSURL(fileURLWithPath: self).deletingPathExtension?.lastPathComponent {
             return fileNameWithoutExtension
         }
         return ""
-        
     }
     
     func fileExtension() -> String {

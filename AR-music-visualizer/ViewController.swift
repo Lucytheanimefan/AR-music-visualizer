@@ -103,7 +103,7 @@ class ViewController: UIViewController {
         return documentsDirectory
     }
     
-    func displayMediaPickerAndPlayItem(){
+    func displayMediaPicker(){
         mediaPicker = MPMediaPickerController(mediaTypes: .anyAudio)
         
         if let picker = mediaPicker{
@@ -118,7 +118,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func openItunesLibrary(_ sender: UIButton) {
-        displayMediaPickerAndPlayItem()
+        displayMediaPicker()
     }
     
 
@@ -137,9 +137,8 @@ extension ViewController: MPMediaPickerControllerDelegate{
         myMusicPlayer = MPMusicPlayerController()
         print(mediaItemCollection)
         if let player = myMusicPlayer{
-            player.beginGeneratingPlaybackNotifications()
-            player.setQueue(with: mediaItemCollection)
-            
+            //player.beginGeneratingPlaybackNotifications()
+            //player.setQueue(with: mediaItemCollection)
             //player.play()
             
             // Get the file
@@ -147,7 +146,14 @@ extension ViewController: MPMediaPickerControllerDelegate{
             if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
             {
                 self.debugView.text = assetURL.absoluteString
+                let musicLoader = MusicLoader(filePath: assetURL)
+                musicLoader.retrieveAudioBuffer()
+                
+                
+                //self.debugView.text.append(musicLoader.magnitudes.description)
             }
+            
+            
             mediaPicker.dismiss(animated: true, completion: nil)
         }
     }
