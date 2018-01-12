@@ -51,6 +51,12 @@ class FFTViewController: UIViewController {
         displayMediaPicker()
     }
     
+    @IBAction func go(_ sender: Any) {
+        if let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav") as? URL{
+           self.begin(file: url)
+        }
+    }
+    
     func begin(file:URL){
         guard let audioFile = try? AVAudioFile(forReading: file) else {
             os_log("%@: Invalid file: %@", self.description, file.absoluteString)

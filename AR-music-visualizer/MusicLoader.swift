@@ -65,7 +65,7 @@ class MusicLoader: NSObject {
             
             audioNode.play()
             
-            delegate.onPlay()
+            //delegate.onPlay()
         }
         catch
         {
