@@ -25,6 +25,7 @@ class MusicLoader: NSObject {
     }
     
     func begin(file:URL){
+        
         guard let audioFile = try? AVAudioFile(forReading: file) else {
             os_log("%@: Invalid file: %@", self.description, file.absoluteString)
             return

@@ -123,7 +123,12 @@ class ViewController: UIViewController {
         displayMediaPicker()
     }
     
-
+    @IBAction func debugGo(_ sender: UIButton) {
+        if let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav") as? URL{
+            musicLoader.begin(file: url)
+        }
+    }
+    
 }
 
 extension ViewController: AVAudioRecorderDelegate{
