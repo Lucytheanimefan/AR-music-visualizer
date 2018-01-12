@@ -32,6 +32,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         //self.recordingSession = AVAudioSession.sharedInstance()
         musicLoader = MusicLoader()
+        musicLoader.delegate = self
         
     }
 
@@ -144,20 +145,18 @@ extension ViewController: MPMediaPickerControllerDelegate{
         myMusicPlayer = MPMusicPlayerController()
         print(mediaItemCollection)
         if let player = myMusicPlayer{
-            //player.beginGeneratingPlaybackNotifications()
-            //player.setQueue(with: mediaItemCollection)
-            //player.play()
+            myMusicPlayer!.beginGeneratingPlaybackNotifications()
+            myMusicPlayer!.setQueue(with: mediaItemCollection)
+//            player.play()
             
             // Get the file
             let musicItem = mediaItemCollection.items[0]
             if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
             {
+                //player.pause()
                 self.debugView.text = assetURL.absoluteString
                 musicLoader.begin(file: assetURL)
-    
-                
-                
-                //self.debugView.text.append(musicLoader.magnitudes.description)
+                //self.debugView.text = musicLoader.magnitudes.description
             }
             
             
@@ -177,6 +176,21 @@ extension UIViewController{
         }))
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
+        }
+    }
+}
+
+extension ViewController: MusicLoaderDelegate{
+    func onPlay() {
+        os_log("%@: ON PLAY", self.description)
+        if let player = myMusicPlayer{
+            player.play()
+        }
+    }
+    
+    func dealWithFFTMagnitudes(magnitudes: [Float]) {
+        DispatchQueue.main.async {
+            self.debugView.text = magnitudes.description
         }
     }
 }

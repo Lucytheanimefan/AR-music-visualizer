@@ -10,6 +10,12 @@ import AVFoundation
 import Accelerate
 import os.log
 
+protocol MusicLoaderDelegate{
+    func onPlay()
+    
+    func dealWithFFTMagnitudes(magnitudes:[Float])
+}
+
 class MusicLoader: NSObject {
 
     var audioEngine = AVAudioEngine()
@@ -18,6 +24,8 @@ class MusicLoader: NSObject {
     var magnitudes:[Float]!
     
     var file:URL!
+    
+    var delegate: MusicLoaderDelegate!
     
     override init() {
         super.init()
@@ -56,6 +64,8 @@ class MusicLoader: NSObject {
             try audioEngine.start()
             
             audioNode.play()
+            
+            delegate.onPlay()
         }
         catch
         {
@@ -92,18 +102,21 @@ class MusicLoader: NSObject {
         vDSP_fft_zrip(fftSetup!, &output, 1, log2n, FFTDirection(FFT_FORWARD))
         
         var magnitudes = [Float](repeating: 0.0, count: inputCount)
+        
+        
         vDSP_zvmags(&output, 1, &magnitudes, 1, vDSP_Length(inputCount))
         
         var normalizedMagnitudes = [Float](repeating: 0.0, count: inputCount)
         vDSP_vsmul(sqrtq(magnitudes), 1, [2.0 / Float(inputCount)],
                    &normalizedMagnitudes, 1, vDSP_Length(inputCount))
         
+        delegate.dealWithFFTMagnitudes(magnitudes: normalizedMagnitudes)
+        os_log("%@: FFT magnitudes: %@", self.description,  normalizedMagnitudes)
+        
         let buffer = Buffer(elements: normalizedMagnitudes)
         
         vDSP_destroy_fftsetup(fftSetup)
-        
-        print("BUFFER")
-        print(buffer)
+   
         return buffer
     }
     
@@ -148,7 +161,10 @@ class MusicLoader: NSObject {
                    &normalizedMagnitudes, 1, vDSP_Length(inputCount))
         
         self.magnitudes = magnitudes
-        os_log("%@: FFT magnitudes: %@", self.description, magnitudes)
+        delegate.dealWithFFTMagnitudes(magnitudes: magnitudes)
+        //#if DEBUG
+            os_log("%@: FFT magnitudes: %@", self.description, magnitudes)
+        //#endif
         vDSP_destroy_fftsetup(fftSetup)
     }
     
