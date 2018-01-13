@@ -14,6 +14,7 @@ import os.log
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var visualizationButton: UIButton!
     // Recording music
     @IBOutlet weak var recordButton: UIButton!
 //    var recordingSession: AVAudioSession!
@@ -142,27 +143,26 @@ extension ViewController: AVAudioRecorderDelegate{
 
 extension ViewController: MPMediaPickerControllerDelegate{
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        myMusicPlayer = MPMusicPlayerController()
-        print(mediaItemCollection)
-        if let player = myMusicPlayer{
-            myMusicPlayer!.beginGeneratingPlaybackNotifications()
-            myMusicPlayer!.setQueue(with: mediaItemCollection)
-//            player.play()
-            
-            // Get the file
-            let musicItem = mediaItemCollection.items[0]
-            if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
-            {
-                //player.pause()
-                self.debugView.text = assetURL.absoluteString
-                musicLoader.begin(file: assetURL)
-                //self.debugView.text = musicLoader.magnitudes.description
-            }
-            
-            
-            mediaPicker.dismiss(animated: true, completion: nil)
+        //        myMusicPlayer = MPMusicPlayerController()
+        //
+        //        if let player = myMusicPlayer{
+        //myMusicPlayer!.beginGeneratingPlaybackNotifications()
+        //myMusicPlayer!.setQueue(with: mediaItemCollection)
+        //
+        
+        // Get the file
+        let musicItem = mediaItemCollection.items[0]
+        if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
+        {
+            self.debugView.text = assetURL.absoluteString
+            musicLoader.begin(file: assetURL)
+            //self.debugView.text = musicLoader.magnitudes.description
         }
+        
+        
+        mediaPicker.dismiss(animated: true, completion: nil)
     }
+    //}
     
     
 }
