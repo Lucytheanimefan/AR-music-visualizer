@@ -35,9 +35,9 @@ class ARManager: NSObject {
         // Add the SCNDebugOptions options
         // showConstraints, showLightExtents are SCNDebugOptions
         // showFeaturePoints and showWorldOrigin are ARSCNDebugOptions
-        #if DEBUG
-        sceneView.debugOptions  = [SCNDebugOptions.showConstraints, SCNDebugOptions.showLightExtents, ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
-        #endif
+//        #if DEBUG
+//        sceneView.debugOptions  = [SCNDebugOptions.showConstraints, SCNDebugOptions.showLightExtents, ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+//        #endif
         
         //shows fps rate
         sceneView.showsStatistics = true

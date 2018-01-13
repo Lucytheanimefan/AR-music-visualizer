@@ -22,11 +22,21 @@ class ARViewController: UIViewController {
     
     var nodes:[SCNNode] = [SCNNode]()
     
+    fileprivate lazy var spotLight: SCNLight = {
+        let spotLight = SCNLight()
+        spotLight.type = .spot
+        spotLight.spotInnerAngle = 0
+        spotLight.spotOuterAngle = 45
+        spotLight.castsShadow = true
+        return spotLight
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sceneView.scene.physicsWorld.contactDelegate = self
         self.manager = ARManager(sceneView: sceneView)
         self.manager.initializeSceneView()
+        self.sceneView.pointOfView?.light = spotLight
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
         
@@ -109,7 +119,7 @@ extension ARViewController: MusicLoaderDelegate{
         
         print("Magnitude count: \(magnitudes.count)")
         for (index, magnitude) in magnitudes.enumerated(){
-            let m = magnitude
+            let m = magnitude*10
             
             let s = SCNVector3Make(m, m, m)
             nodes[index].scale = s
