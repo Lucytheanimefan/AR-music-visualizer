@@ -10,9 +10,16 @@ import UIKit
 import ARKit
 class ARManager: NSObject {
     
-    static let shared = ARManager()
     
-    func initializeSceneView(sceneView: ARSCNView) {
+    var configuration: ARWorldTrackingConfiguration!
+    
+    var sceneView: ARSCNView!
+    
+    init(sceneView: ARSCNView) {
+        self.sceneView = sceneView
+    }
+    
+    func initializeSceneView() {
         // Set the view's delegate
         sceneView.delegate = self
         
@@ -26,7 +33,9 @@ class ARManager: NSObject {
         // Add the SCNDebugOptions options
         // showConstraints, showLightExtents are SCNDebugOptions
         // showFeaturePoints and showWorldOrigin are ARSCNDebugOptions
-        //sceneView.debugOptions  = [SCNDebugOptions.showConstraints, SCNDebugOptions.showLightExtents, ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        #if DEBUG
+        sceneView.debugOptions  = [SCNDebugOptions.showConstraints, SCNDebugOptions.showLightExtents, ARSCNDebugOptions.showFeaturePoints, ARSCNDebugOptions.showWorldOrigin]
+        #endif
         
         //shows fps rate
         sceneView.showsStatistics = true
@@ -34,8 +43,29 @@ class ARManager: NSObject {
         sceneView.automaticallyUpdatesLighting = true
     }
     
+    func startSession() {
+        configuration = ARWorldTrackingConfiguration()
+        //currenly only planeDetection available is horizontal.
+        configuration!.planeDetection = ARWorldTrackingConfiguration.PlaneDetection.horizontal
+        sceneView.session.run(configuration!, options: [ARSession.RunOptions.removeExistingAnchors,
+                                                        ARSession.RunOptions.resetTracking])
+        
+    }
+    
+    func createParticleSystem() -> SCNNode?{
+        var systemNode:SCNNode!
+        if let particleSystem = SCNParticleSystem(named: "Explosion", inDirectory: nil){
+            systemNode = SCNNode()
+            systemNode.addParticleSystem(particleSystem)
+        }
+        return systemNode
+    }
+    
+   
 }
 
 extension ARManager: ARSCNViewDelegate{
+    
+    
     
 }

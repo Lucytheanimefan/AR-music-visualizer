@@ -17,13 +17,20 @@ class ARViewController: UIViewController {
     
     var musicLoader:MusicLoader!
     
+    var manager: ARManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.sceneView.scene.physicsWorld.contactDelegate = self
+        self.manager = ARManager(sceneView: sceneView)
+        self.manager.initializeSceneView()
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
-
-        
-
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.manager.startSession()
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,15 +42,33 @@ class ARViewController: UIViewController {
         self.musicLoader.begin(file: self.musicFilePath)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true) {
+            self.musicLoader.cancel()
+        }
     }
-    */
+    
+    func addParticleNode(position: SCNVector3){
+        if let particleNode = manager.createParticleSystem(){
+            particleNode.position = position
+            self.sceneView.scene.rootNode.addChildNode(particleNode)
+            os_log("%@: Added particle system", self.description)
+        }
+        
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first!
+        let location = touch.location(in: sceneView)
+        let hitResults = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
+        if hitResults.count > 0 {
+            let result: ARHitTestResult = hitResults.first!
+            let newLocation = SCNVector3Make(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y/3, result.worldTransform.columns.3.z)
+            addParticleNode(position: newLocation)
+        }
+    }
+    
 
 }
 
@@ -55,6 +80,19 @@ extension ARViewController: MusicLoaderDelegate{
     func dealWithFFTMagnitudes(magnitudes: [Float]) {
         //os_log("%@: FFT: %@", self.description, magnitudes)
     }
-    
-    
+}
+
+extension ARViewController: SCNPhysicsContactDelegate{
+    func physicsWorld(_ world: SCNPhysicsWorld, didUpdate contact: SCNPhysicsContact) {
+        if let particleSystem = SCNParticleSystem(named: "Explosion", inDirectory: nil){
+            let systemNode = SCNNode()
+            systemNode.addParticleSystem(particleSystem)
+            systemNode.position = contact.nodeA.position
+            sceneView.scene.rootNode.addChildNode(systemNode)
+            
+            // Remove objects involved in collision
+            contact.nodeA.removeFromParentNode()
+            contact.nodeB.removeFromParentNode()
+        }
+    }
 }

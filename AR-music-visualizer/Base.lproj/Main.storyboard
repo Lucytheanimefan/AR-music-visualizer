@@ -112,20 +112,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="S2g-fw-2TB">
-                                <rect key="frame" x="16" y="58" width="343" height="565"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <arscnView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="S2g-fw-2TB">
+                                <rect key="frame" x="0.0" y="44" width="375" height="579"/>
                             </arscnView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jf1-um-6Ch">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jf1-um-6Ch">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
-                                    <navigationItem leftItemsSupplementBackButton="YES" id="m0h-bo-LX8"/>
+                                    <navigationItem leftItemsSupplementBackButton="YES" id="m0h-bo-LX8">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="n3O-64-xWm">
+                                            <connections>
+                                                <action selector="cancel:" destination="bwJ-dC-M0L" id="aGU-5I-K8I"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vwf-X4-teO">
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vwf-X4-teO">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
                                     <barButtonItem title="Begin" id="Gh5-8L-Ztq">
                                         <connections>
@@ -136,6 +139,20 @@
                             </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="S2g-fw-2TB" firstAttribute="trailing" secondItem="OgW-Bg-5yh" secondAttribute="trailing" id="0Zn-f4-XaR"/>
+                            <constraint firstItem="jf1-um-6Ch" firstAttribute="trailing" secondItem="OgW-Bg-5yh" secondAttribute="trailing" id="EUy-94-1ug"/>
+                            <constraint firstItem="S2g-fw-2TB" firstAttribute="top" secondItem="jf1-um-6Ch" secondAttribute="bottom" id="Ef1-TM-22O"/>
+                            <constraint firstItem="Vwf-X4-teO" firstAttribute="trailing" secondItem="OgW-Bg-5yh" secondAttribute="trailing" id="IG6-B4-ksK"/>
+                            <constraint firstItem="Vwf-X4-teO" firstAttribute="leading" secondItem="OgW-Bg-5yh" secondAttribute="leading" id="Jpf-9q-0DG"/>
+                            <constraint firstItem="Vwf-X4-teO" firstAttribute="top" secondItem="S2g-fw-2TB" secondAttribute="bottom" id="QJ8-QS-wzN"/>
+                            <constraint firstItem="Vwf-X4-teO" firstAttribute="bottom" secondItem="OgW-Bg-5yh" secondAttribute="bottom" id="TXB-CH-Gam"/>
+                            <constraint firstItem="jf1-um-6Ch" firstAttribute="leading" secondItem="OgW-Bg-5yh" secondAttribute="leading" id="YbY-y4-2UY"/>
+                            <constraint firstItem="S2g-fw-2TB" firstAttribute="leading" secondItem="OgW-Bg-5yh" secondAttribute="leading" id="bUc-F7-kdG"/>
+                            <constraint firstItem="S2g-fw-2TB" firstAttribute="top" secondItem="jf1-um-6Ch" secondAttribute="bottom" id="buJ-ZG-iKU"/>
+                            <constraint firstItem="jf1-um-6Ch" firstAttribute="top" secondItem="hi4-Xt-XxW" secondAttribute="top" id="mYq-Al-ZyY"/>
+                            <constraint firstItem="Vwf-X4-teO" firstAttribute="top" secondItem="S2g-fw-2TB" secondAttribute="bottom" id="oOK-rh-WZ1"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="OgW-Bg-5yh"/>
                     </view>
                     <connections>

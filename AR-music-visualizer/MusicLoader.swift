@@ -32,26 +32,12 @@ class MusicLoader: NSObject {
 //        super.init()
 //
 //    }
+
     
     func begin(file:URL){
         os_log("%@: Begin", self.description)
-        //audioEngine.detach(audioNode)
-
-        //audioEngine.inputNode.removeTap(onBus: 0)
-        
         audioEngine.attach(audioNode)
 
-        //audioEngine.inputNode.removeTap(onBus: 0)
-        
-//        var filePath = file
-//        if (file == nil && self.musicPath != nil){
-//            filePath = self.musicPath
-//        }
-//
-//        guard filePath != nil else {
-//            os_log("%@: File path is null", self.description)
-//            return
-//        }
         
         guard let audioFile = try? AVAudioFile(forReading: file) else {
             os_log("%@: Invalid file: %@", self.description, (file.absoluteString))
@@ -66,6 +52,11 @@ class MusicLoader: NSObject {
         }
     }
 
+    func cancel(){
+        audioEngine.inputNode.removeTap(onBus: 0)
+        audioEngine.detach(audioNode)
+    }
+    
     private func retrieveAudioBuffer(){
         let size: UInt32 = 1024
         let mixerNode = audioEngine.mainMixerNode
