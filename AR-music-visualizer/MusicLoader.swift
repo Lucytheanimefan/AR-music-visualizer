@@ -17,25 +17,44 @@ protocol MusicLoaderDelegate{
 }
 
 class MusicLoader: NSObject {
+    
 
     var audioEngine = AVAudioEngine()
     var audioNode = AVAudioPlayerNode()
     
     var magnitudes:[Float]!
     
-    var file:URL!
+    var musicPath:URL!
     
     var delegate: MusicLoaderDelegate!
     
-    override init() {
-        super.init()
-        audioEngine.attach(audioNode)
-    }
+//    override init() {
+//        super.init()
+//
+//    }
     
     func begin(file:URL){
+        os_log("%@: Begin", self.description)
+        //audioEngine.detach(audioNode)
+
+        //audioEngine.inputNode.removeTap(onBus: 0)
+        
+        audioEngine.attach(audioNode)
+
+        //audioEngine.inputNode.removeTap(onBus: 0)
+        
+//        var filePath = file
+//        if (file == nil && self.musicPath != nil){
+//            filePath = self.musicPath
+//        }
+//
+//        guard filePath != nil else {
+//            os_log("%@: File path is null", self.description)
+//            return
+//        }
         
         guard let audioFile = try? AVAudioFile(forReading: file) else {
-            os_log("%@: Invalid file: %@", self.description, file.absoluteString)
+            os_log("%@: Invalid file: %@", self.description, (file.absoluteString))
             return
         }
         if let buffer = AVAudioPCMBuffer(pcmFormat: audioFile.processingFormat,
@@ -51,6 +70,7 @@ class MusicLoader: NSObject {
         let size: UInt32 = 1024
         let mixerNode = audioEngine.mainMixerNode
         
+        
         // observe the output of the player node
         mixerNode.installTap(onBus: 0,
                              bufferSize: size,
@@ -65,6 +85,7 @@ class MusicLoader: NSObject {
             
             audioNode.play()
             
+            os_log("%@: PLAY", self.description)
             //delegate.onPlay()
         }
         catch

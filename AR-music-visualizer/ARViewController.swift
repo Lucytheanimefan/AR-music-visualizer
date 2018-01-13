@@ -8,15 +8,22 @@
 
 import UIKit
 import ARKit
-
+import os.log
 
 class ARViewController: UIViewController {
     @IBOutlet weak var sceneView: ARSCNView!
     
+    var musicFilePath:URL!
+    
+    var musicLoader:MusicLoader!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.musicLoader = MusicLoader()
+        self.musicLoader.delegate = self
 
-        // Do any additional setup after loading the view.
+        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,7 +31,10 @@ class ARViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    @IBAction func begin(_ sender: UIBarButtonItem) {
+        self.musicLoader.begin(file: self.musicFilePath)
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -35,4 +45,16 @@ class ARViewController: UIViewController {
     }
     */
 
+}
+
+extension ARViewController: MusicLoaderDelegate{
+    func onPlay() {
+        
+    }
+    
+    func dealWithFFTMagnitudes(magnitudes: [Float]) {
+        //os_log("%@: FFT: %@", self.description, magnitudes)
+    }
+    
+    
 }

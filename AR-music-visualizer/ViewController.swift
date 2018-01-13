@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     var mediaPicker: MPMediaPickerController?
     var myMusicPlayer: MPMusicPlayerController?
     
-    var musicLoader:MusicLoader!
+    var musicAssetURL:URL!
 
     @IBOutlet weak var debugView: UITextView!
     
@@ -32,8 +32,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.recordingSession = AVAudioSession.sharedInstance()
-        musicLoader = MusicLoader()
-        musicLoader.delegate = self
+
+   
         
     }
 
@@ -126,8 +126,18 @@ class ViewController: UIViewController {
     }
     
     @IBAction func debugGo(_ sender: UIButton) {
-        if let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav") as? URL{
-            musicLoader.begin(file: url)
+//        if let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav"){
+//            MusicLoader.shared.begin(file: url)
+//        }
+    }
+    
+    @IBAction func goToVisualization(_ sender: UIButton) {
+        performSegue(withIdentifier: "ARVisualizationSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let vc = segue.destination as? ARViewController{
+            vc.musicFilePath = self.musicAssetURL
         }
     }
     
@@ -154,9 +164,9 @@ extension ViewController: MPMediaPickerControllerDelegate{
         let musicItem = mediaItemCollection.items[0]
         if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
         {
+            self.musicAssetURL = assetURL
+            self.visualizationButton.isHidden = false
             self.debugView.text = assetURL.absoluteString
-            musicLoader.begin(file: assetURL)
-            //self.debugView.text = musicLoader.magnitudes.description
         }
         
         
@@ -180,17 +190,16 @@ extension UIViewController{
     }
 }
 
-extension ViewController: MusicLoaderDelegate{
-    func onPlay() {
-        os_log("%@: ON PLAY", self.description)
-        if let player = myMusicPlayer{
-            player.play()
-        }
-    }
-    
-    func dealWithFFTMagnitudes(magnitudes: [Float]) {
-        DispatchQueue.main.async {
-            self.debugView.text = magnitudes.description
-        }
-    }
-}
+//extension ViewController: MusicLoaderDelegate{
+//    func onPlay() {
+//        os_log("%@: ON PLAY", self.description)
+//
+//    }
+//
+//    func dealWithFFTMagnitudes(magnitudes: [Float]) {
+//        DispatchQueue.main.async {
+//            self.debugView.text = magnitudes.description
+//        }
+//    }
+//}
+
