@@ -87,7 +87,8 @@ class MusicLoader: NSObject {
     
     private func fftTransform(buffer: AVAudioPCMBuffer) -> [Float] {
         print("FFT transform")
-        let frameCount = buffer.frameLength
+        let frameCount = Constants.FRAME_COUNT//buffer.frameLength
+        //print("Frame count: \(frameCount)")
         let log2n = UInt(round(log2(Double(frameCount))))
         let bufferSizePOT = Int(1 << log2n)
         let inputCount = bufferSizePOT / 2
@@ -97,7 +98,11 @@ class MusicLoader: NSObject {
         var imagp = [Float](repeating: 0, count: inputCount)
         var output = DSPSplitComplex(realp: &realp, imagp: &imagp)
         
+        // This is the value the web app uses
         let windowSize = bufferSizePOT
+        
+        
+        //print("Window size: \(windowSize)")
         var transferBuffer = [Float](repeating: 0, count: windowSize)
         var window = [Float](repeating: 0, count: windowSize)
         

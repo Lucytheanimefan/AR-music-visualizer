@@ -20,6 +20,7 @@
 		7C7C1D002003C2A600C000F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C1CFF2003C2A600C000F2 /* Assets.xcassets */; };
 		7C7C1D032003C2A600C000F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C1D012003C2A600C000F2 /* LaunchScreen.storyboard */; };
 		7C7C1D0E2003C2A600C000F2 /* AR_music_visualizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C1D0D2003C2A600C000F2 /* AR_music_visualizerTests.swift */; };
+		7CA24470200AA4D900020BFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2446F200AA4D900020BFE /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,7 @@
 		7C7C1D092003C2A600C000F2 /* AR-music-visualizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AR-music-visualizerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7C1D0D2003C2A600C000F2 /* AR_music_visualizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_music_visualizerTests.swift; sourceTree = "<group>"; };
 		7C7C1D0F2003C2A600C000F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7CA2446F200AA4D900020BFE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 				7C0CD4A82009895D00F39134 /* ARViewController.swift */,
 				7C0CD4AA200989A100F39134 /* ARManager.swift */,
 				7C0CD4AE200A56D500F39134 /* Explosion.scnp */,
+				7CA2446F200AA4D900020BFE /* Constants.swift */,
 			);
 			path = "AR-music-visualizer";
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				7C7C1CFB2003C2A600C000F2 /* ViewController.swift in Sources */,
 				7C7C1CF92003C2A600C000F2 /* AppDelegate.swift in Sources */,
 				7C0CD49C2007A86800F39134 /* FFTTransformer.swift in Sources */,
+				7CA24470200AA4D900020BFE /* Constants.swift in Sources */,
 				7C0CD4AB200989A100F39134 /* ARManager.swift in Sources */,
 				7C0CD4A92009895D00F39134 /* ARViewController.swift in Sources */,
 			);

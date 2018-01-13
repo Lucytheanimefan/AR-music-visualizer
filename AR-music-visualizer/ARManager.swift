@@ -16,7 +16,9 @@ class ARManager: NSObject {
     var sceneView: ARSCNView!
     
     init(sceneView: ARSCNView) {
+        super.init()
         self.sceneView = sceneView
+        sceneView.delegate = self
     }
     
     func initializeSceneView() {

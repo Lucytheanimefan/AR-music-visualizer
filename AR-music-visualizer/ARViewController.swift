@@ -11,6 +11,7 @@ import ARKit
 import os.log
 
 class ARViewController: UIViewController {
+    
     @IBOutlet weak var sceneView: ARSCNView!
     
     var musicFilePath:URL!
@@ -19,6 +20,8 @@ class ARViewController: UIViewController {
     
     var manager: ARManager!
     
+    var nodes:[SCNNode] = [SCNNode]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.sceneView.scene.physicsWorld.contactDelegate = self
@@ -26,6 +29,14 @@ class ARViewController: UIViewController {
         self.manager.initializeSceneView()
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
+        
+        //addSphereNode()
+        let incrementAngle = CGFloat((8*Float.pi) / Float(Constants.FRAME_COUNT))
+        for i in 0..<(Constants.FRAME_COUNT/2) {
+            let x = cos(CGFloat(i/2) * incrementAngle)
+            let y = sin(CGFloat(i/2) * incrementAngle)
+            addSphereNode(position: SCNVector3Make(Float(x), Float(y), /*Float(i) * 0.05*/-2))
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,22 +61,37 @@ class ARViewController: UIViewController {
     
     func addParticleNode(position: SCNVector3){
         if let particleNode = manager.createParticleSystem(){
+            nodes.append(particleNode)
             particleNode.position = position
-            self.sceneView.scene.rootNode.addChildNode(particleNode)
+            addNodeToScene(node: particleNode)
             os_log("%@: Added particle system", self.description)
         }
-        
     }
     
+    func addSphereNode(position: SCNVector3){
+        let size = 0.05
+        let sphere = SCNSphere(radius: 0.1)
+        sphere.firstMaterial?.diffuse.contents = UIColor.blue
+        let node = SCNNode()
+        node.geometry = sphere
+        node.position = position
+        nodes.append(node)
+        addNodeToScene(node: node)
+    }
+    
+    func addNodeToScene(node:SCNNode){
+        self.sceneView.scene.rootNode.addChildNode(node)
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first!
         let location = touch.location(in: sceneView)
-        let hitResults = sceneView.hitTest(location, types: .existingPlaneUsingExtent)
+        let hitResults = sceneView.hitTest(location, types: [.existingPlaneUsingExtent, .featurePoint])
         if hitResults.count > 0 {
             let result: ARHitTestResult = hitResults.first!
             let newLocation = SCNVector3Make(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y/3, result.worldTransform.columns.3.z)
-            addParticleNode(position: newLocation)
+            //addParticleNode(position: newLocation)
+            addSphereNode(position: newLocation)
         }
     }
     
@@ -78,7 +104,18 @@ extension ARViewController: MusicLoaderDelegate{
     }
     
     func dealWithFFTMagnitudes(magnitudes: [Float]) {
+        let rotate = SCNVector3Make(0, 0, 0)
         //os_log("%@: FFT: %@", self.description, magnitudes)
+        
+        print("Magnitude count: \(magnitudes.count)")
+        for (index, magnitude) in magnitudes.enumerated(){
+            let m = magnitude
+            
+            let s = SCNVector3Make(m, m, m)
+            nodes[index].scale = s
+                //let q = SCNVector4Make(m, m, m, m)
+            //nodes[index].rotate(by: q, aroundTarget: rotate)
+        }
     }
 }
 
