@@ -14,6 +14,7 @@
 		7C0CD4AB200989A100F39134 /* ARManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0CD4AA200989A100F39134 /* ARManager.swift */; };
 		7C0CD4AD200A519700F39134 /* spark.png in Resources */ = {isa = PBXBuildFile; fileRef = 7C0CD4AC200A519600F39134 /* spark.png */; };
 		7C0CD4AF200A56D600F39134 /* Explosion.scnp in Resources */ = {isa = PBXBuildFile; fileRef = 7C0CD4AE200A56D500F39134 /* Explosion.scnp */; };
+		7C396C712014083B009E37E0 /* FigureManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C396C702014083B009E37E0 /* FigureManager.swift */; };
 		7C7C1CF92003C2A600C000F2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C1CF82003C2A600C000F2 /* AppDelegate.swift */; };
 		7C7C1CFB2003C2A600C000F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C1CFA2003C2A600C000F2 /* ViewController.swift */; };
 		7C7C1CFE2003C2A600C000F2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C1CFC2003C2A600C000F2 /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		7C0CD4AA200989A100F39134 /* ARManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARManager.swift; sourceTree = "<group>"; };
 		7C0CD4AC200A519600F39134 /* spark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spark.png; sourceTree = "<group>"; };
 		7C0CD4AE200A56D500F39134 /* Explosion.scnp */ = {isa = PBXFileReference; lastKnownFileType = file.scp; path = Explosion.scnp; sourceTree = "<group>"; };
+		7C396C702014083B009E37E0 /* FigureManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FigureManager.swift; sourceTree = "<group>"; };
 		7C7C1CF52003C2A600C000F2 /* AR-music-visualizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AR-music-visualizer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C7C1CF82003C2A600C000F2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7C7C1CFA2003C2A600C000F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				7C0CD4AA200989A100F39134 /* ARManager.swift */,
 				7C0CD4AE200A56D500F39134 /* Explosion.scnp */,
 				7CA2446F200AA4D900020BFE /* Constants.swift */,
+				7C396C702014083B009E37E0 /* FigureManager.swift */,
 			);
 			path = "AR-music-visualizer";
 			sourceTree = "<group>";
@@ -229,6 +232,7 @@
 				7C0CD4982007A4FA00F39134 /* MusicLoader.swift in Sources */,
 				7C7C1CFB2003C2A600C000F2 /* ViewController.swift in Sources */,
 				7C7C1CF92003C2A600C000F2 /* AppDelegate.swift in Sources */,
+				7C396C712014083B009E37E0 /* FigureManager.swift in Sources */,
 				7C0CD49C2007A86800F39134 /* FFTTransformer.swift in Sources */,
 				7CA24470200AA4D900020BFE /* Constants.swift in Sources */,
 				7C0CD4AB200989A100F39134 /* ARManager.swift in Sources */,

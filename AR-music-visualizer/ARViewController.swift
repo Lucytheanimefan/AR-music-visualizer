@@ -40,13 +40,8 @@ class ARViewController: UIViewController {
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
         
-        //addSphereNode()
-        let incrementAngle = CGFloat((8*Float.pi) / Float(Constants.FRAME_COUNT))
-        for i in 0..<(Constants.FRAME_COUNT/2) {
-            let x = cos(CGFloat(i/2) * incrementAngle)
-            let y = sin(CGFloat(i/2) * incrementAngle)
-            addSphereNode(position: SCNVector3Make(Float(x), Float(y), /*Float(i) * 0.05*/-2))
-        }
+        //addSpheres()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,24 +64,35 @@ class ARViewController: UIViewController {
         }
     }
     
-    func addParticleNode(position: SCNVector3){
-        if let particleNode = manager.createParticleSystem(){
-            nodes.append(particleNode)
-            particleNode.position = position
-            addNodeToScene(node: particleNode)
-            os_log("%@: Added particle system", self.description)
+    func addSpheres(){
+        let incrementAngle = CGFloat((8*Float.pi) / Float(Constants.FRAME_COUNT))
+        for i in 0..<(Constants.FRAME_COUNT/2) {
+            let x = cos(CGFloat(i/2) * incrementAngle)
+            let y = sin(CGFloat(i/2) * incrementAngle)
+            let node = addSphereNode(position: SCNVector3Make(Float(x), Float(y), /*Float(i) * 0.05*/-2))
+            nodes.append(node)
         }
     }
     
-    func addSphereNode(position: SCNVector3){
-        let size = 0.05
+    func addParticleNode(position: SCNVector3) -> SCNNode?{
+        if let particleNode = manager.createParticleSystem(){
+            //nodes.append(particleNode)
+            particleNode.position = position
+            addNodeToScene(node: particleNode)
+            os_log("%@: Added particle system", self.description)
+            return particleNode
+        }
+        return nil
+    }
+    
+    func addSphereNode(position: SCNVector3) -> SCNNode{
         let sphere = SCNSphere(radius: 0.1)
         sphere.firstMaterial?.diffuse.contents = UIColor.blue
         let node = SCNNode()
         node.geometry = sphere
         node.position = position
-        nodes.append(node)
         addNodeToScene(node: node)
+        return node
     }
     
     func addNodeToScene(node:SCNNode){
@@ -114,18 +120,28 @@ extension ARViewController: MusicLoaderDelegate{
     }
     
     func dealWithFFTMagnitudes(magnitudes: [Float]) {
-        let rotate = SCNVector3Make(0, 0, 0)
-        //os_log("%@: FFT: %@", self.description, magnitudes)
-        
         print("Magnitude count: \(magnitudes.count)")
-        for (index, magnitude) in magnitudes.enumerated(){
-            let m = magnitude*10
+        
+        for (index, magnitude) in magnitudes.enumerated()
+        {
             
-            let s = SCNVector3Make(m, m, m)
-            nodes[index].scale = s
-                //let q = SCNVector4Make(m, m, m, m)
-            //nodes[index].rotate(by: q, aroundTarget: rotate)
+            
+            //updateNodeScalesWithFFT(index: index, magnitude: magnitude)
         }
+        
+    }
+
+    
+    func updateNodeScalesWithFFT(index:Int, magnitude:Float){
+        
+        let m = magnitude*10
+        
+        let s = SCNVector3Make(m, m, m)
+        nodes[index].scale = s
+        
+        //let q = SCNVector4Make(m, m, m, m)
+        //nodes[index].rotate(by: q, aroundTarget: rotate)
+        
     }
 }
 

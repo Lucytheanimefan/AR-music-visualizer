@@ -51,7 +51,6 @@ class ARManager: NSObject {
         configuration!.planeDetection = ARWorldTrackingConfiguration.PlaneDetection.horizontal
         sceneView.session.run(configuration!, options: [ARSession.RunOptions.removeExistingAnchors,
                                                         ARSession.RunOptions.resetTracking])
-        
     }
     
     func createParticleSystem() -> SCNNode?{
@@ -62,7 +61,7 @@ class ARManager: NSObject {
         }
         return systemNode
     }
-    
+
    
 }
 
