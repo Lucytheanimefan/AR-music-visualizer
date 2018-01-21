@@ -16,6 +16,7 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        
         // Do any additional setup after loading the view.
     }
 
@@ -37,6 +38,8 @@ class SettingsViewController: UIViewController {
 
 }
 
+
+
 extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -56,3 +59,5 @@ extension SettingsViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     }
     
 }
+
+

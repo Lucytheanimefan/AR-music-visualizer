@@ -33,6 +33,7 @@ class ARViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Settings.shared.delegate = self
         self.sceneView.scene.physicsWorld.contactDelegate = self
         self.manager = ARManager(sceneView: sceneView)
         self.manager.initializeSceneView()
@@ -222,6 +223,19 @@ extension ARViewController: SCNPhysicsContactDelegate{
             // Remove objects involved in collision
             contact.nodeA.removeFromParentNode()
             contact.nodeB.removeFromParentNode()
+        }
+    }
+}
+
+extension ARViewController: SettingsDelegate {
+    func onSwitch(type: String) {
+        // Remove all nodes
+        removeAllNodes()
+    }
+    
+    func removeAllNodes(){
+        self.sceneView.scene.rootNode.childNodes.forEach { (node) in
+            node.removeFromParentNode()
         }
     }
 }

@@ -8,9 +8,27 @@
 
 import UIKit
 
+protocol SettingsDelegate {
+    func onSwitch(type:String)
+}
+
 class Settings: NSObject {
     
-    var visualizationType:String = "Sphere"
+    var delegate: SettingsDelegate!
+    
+    private var _visualizationType:String = "Sphere"
+    var visualizationType:String
+    {
+        get {
+            return self._visualizationType
+        }
+        
+        set{
+            self._visualizationType = newValue
+            delegate.onSwitch(type: self._visualizationType)
+        }
+        
+    }
     
     static let shared = Settings()
 
