@@ -86,7 +86,7 @@ class MusicLoader: NSObject {
     }
     
     private func fftTransform(buffer: AVAudioPCMBuffer)/* -> [Float]*/ {
-        print("FFT transform")
+        //print("FFT transform")
         let frameCount = Constants.FRAME_COUNT//buffer.frameLength
         //print("Frame count: \(frameCount)")
         let log2n = UInt(round(log2(Double(frameCount))))
@@ -130,7 +130,7 @@ class MusicLoader: NSObject {
         delegate.dealWithFFTMagnitudes(magnitudes: normalizedMagnitudes)
         
         #if DEBUG
-        os_log("%@: FFT magnitudes: %@", self.description,  normalizedMagnitudes)
+        //os_log("%@: FFT magnitudes: %@", self.description,  normalizedMagnitudes)
         #endif
         
         //let buffer = Buffer(elements: normalizedMagnitudes)

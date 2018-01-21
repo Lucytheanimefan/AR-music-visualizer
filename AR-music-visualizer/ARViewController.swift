@@ -22,6 +22,8 @@ class ARViewController: UIViewController {
     
     var nodes:[SCNNode] = [SCNNode]()
     
+    @IBOutlet weak var beginButton: UIBarButtonItem!
+    
     fileprivate lazy var spotLight: SCNLight = {
         let spotLight = SCNLight()
         spotLight.type = .spot
@@ -67,6 +69,7 @@ class ARViewController: UIViewController {
     
     @IBAction func begin(_ sender: UIBarButtonItem) {
         self.musicLoader.begin(file: self.musicFilePath)
+        self.beginButton.isEnabled = false
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -92,19 +95,31 @@ class ARViewController: UIViewController {
     }
     
     func addRibbons(){
-        let incrementAngle = CGFloat((8*Float.pi) / Float(Constants.FRAME_COUNT))
+        let incrementAngle = (8*Float.pi) / Float(Constants.FRAME_COUNT)
         for i in 0..<(Constants.FRAME_COUNT/2) {
-            let x = cos(CGFloat(i/2) * incrementAngle)
-            let y = sin(CGFloat(i/2) * incrementAngle)
+            let x = CGFloat(cos(Float(i/2) * incrementAngle))
+            let y = CGFloat(sin(Float(i/2) * incrementAngle))
+            
+            let radius = CGFloat(self.sceneView.frame.width/10)
+            let startAngle = CGFloat(-Double.pi/2)
+            let endAngle = CGFloat(1.5*Double.pi)
+            
+            print("Radius: \(radius)")
+            
+            //let path = UIBezierPath(arcCenter: CGPoint(x:CGFloat(x),y:CGFloat(y)) , radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
             
             let path = UIBezierPath()
-            path.move(to: CGPoint(x: x, y: y) )
-            path.addQuadCurve(to: CGPoint(x: 100, y: 0), controlPoint: CGPoint(x: 50, y: 200))
-            path.addLine(to: CGPoint(x: 99, y: 0))
-            path.addQuadCurve(to: CGPoint(x: 1, y: 0), controlPoint: CGPoint(x: 50, y: 198))
+            path.move(to: CGPoint.zero/*CGPoint(x: 10*x, y: y)*/ )
+            path.addLine(to: CGPoint(x: 10*x, y: 10*y))
+//            path.addQuadCurve(to: CGPoint(x: 10*x, y: y), controlPoint: CGPoint(x: 5*x, y: 20*y))
+//            path.addLine(to: CGPoint(x: 9.9*x, y: 0))
+//            path.addQuadCurve(to: CGPoint(x: x, y: 0), controlPoint: CGPoint(x: 5*x, y: 19.8*y))
+//
+
+            
             let shape = FigureManager.extrudePath(path: path, depth: 10.0)
             let shapeNode = SCNNode(geometry: shape)
-            shapeNode.pivot = SCNMatrix4MakeTranslation(50, 0, 0)
+            shapeNode.pivot = SCNMatrix4MakeTranslation(Float(x), 0, 0)
             shapeNode.eulerAngles.y = Float(-Double.pi/4)
             shapeNode.name = "ribbon\(i)"
             nodes.append(shapeNode)
@@ -124,10 +139,9 @@ class ARViewController: UIViewController {
     
     func addParticleNode(position: SCNVector3) -> SCNNode?{
         if let particleNode = manager.createParticleSystem(){
-            //nodes.append(particleNode)
             particleNode.position = position
             addNodeToScene(node: particleNode)
-            os_log("%@: Added particle system", self.description)
+            //os_log("%@: Added particle system", self.description)
             return particleNode
         }
         return nil
@@ -170,7 +184,7 @@ extension ARViewController: MusicLoaderDelegate{
     
     func dealWithFFTMagnitudes(magnitudes: [Float]) {
         #if DEBUG
-        print("Magnitude count: \(magnitudes.count)")
+        //print("Magnitude count: \(magnitudes.count)")
         #endif
         
         for (index, magnitude) in magnitudes.enumerated()
@@ -181,9 +195,7 @@ extension ARViewController: MusicLoaderDelegate{
             else if Settings.shared.visualizationType == "Ribbon"{
                 updateRibbonNodes(index: index, magnitude: magnitude)
             }
-            //updateRibbonNodes(index: index, magnitude: magnitude)
-            
-            //updateNodeScalesWithFFT(index: index, magnitude: magnitude)
+
         }
         
     }
@@ -193,10 +205,9 @@ extension ARViewController: MusicLoaderDelegate{
             return
         }
         if let shape = nodes[index].geometry as? SCNShape{
-            FigureManager.animate(shape: shape, duration: magnitude * 100000)
+            FigureManager.animate(shape: shape, duration: magnitude * 10000)
         }
-        
-        
+
     }
     
     func updateNodeScalesWithFFT(index:Int, magnitude:Float){

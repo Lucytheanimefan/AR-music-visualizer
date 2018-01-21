@@ -14,7 +14,7 @@ protocol SettingsDelegate {
 
 class Settings: NSObject {
     
-    var delegate: SettingsDelegate!
+    var delegate: SettingsDelegate?
     
     private var _visualizationType:String = "Sphere"
     var visualizationType:String
@@ -25,7 +25,7 @@ class Settings: NSObject {
         
         set{
             self._visualizationType = newValue
-            delegate.onSwitch(type: self._visualizationType)
+            delegate?.onSwitch(type: self._visualizationType)
         }
         
     }
