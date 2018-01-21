@@ -40,6 +40,8 @@ class ARViewController: UIViewController {
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
         
+        //addRibbons()
+        //createInitialPath()
         //addSpheres()
         
     }
@@ -47,6 +49,14 @@ class ARViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.manager.startSession()
+        
+        if Settings.shared.visualizationType == "Sphere"{
+            addSpheres()
+        }
+        else if Settings.shared.visualizationType == "Ribbon"{
+            addRibbons()
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,6 +71,43 @@ class ARViewController: UIViewController {
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true) {
             self.musicLoader.cancel()
+        }
+    }
+    
+    func createInitialPath(){
+        let path = UIBezierPath()
+        path.move(to: .zero)
+        path.addQuadCurve(to: CGPoint(x: 100, y: 0), controlPoint: CGPoint(x: 50, y: 200))
+        path.addLine(to: CGPoint(x: 99, y: 0))
+        path.addQuadCurve(to: CGPoint(x: 1, y: 0), controlPoint: CGPoint(x: 50, y: 198))
+        let shape = FigureManager.extrudePath(path: path, depth: 10.0)
+        let shapeNode = SCNNode(geometry: shape)
+        shapeNode.pivot = SCNMatrix4MakeTranslation(50, 0, 0)
+        shapeNode.eulerAngles.y = Float(-Double.pi/4)
+        shapeNode.name = "initialRibbon"
+        nodes.append(shapeNode)
+        addNodeToScene(node: shapeNode)
+        FigureManager.animate(shape: shape, duration: 10.0)
+    }
+    
+    func addRibbons(){
+        let incrementAngle = CGFloat((8*Float.pi) / Float(Constants.FRAME_COUNT))
+        for i in 0..<(Constants.FRAME_COUNT/2) {
+            let x = cos(CGFloat(i/2) * incrementAngle)
+            let y = sin(CGFloat(i/2) * incrementAngle)
+            
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: x, y: y) )
+            path.addQuadCurve(to: CGPoint(x: 100, y: 0), controlPoint: CGPoint(x: 50, y: 200))
+            path.addLine(to: CGPoint(x: 99, y: 0))
+            path.addQuadCurve(to: CGPoint(x: 1, y: 0), controlPoint: CGPoint(x: 50, y: 198))
+            let shape = FigureManager.extrudePath(path: path, depth: 10.0)
+            let shapeNode = SCNNode(geometry: shape)
+            shapeNode.pivot = SCNMatrix4MakeTranslation(50, 0, 0)
+            shapeNode.eulerAngles.y = Float(-Double.pi/4)
+            shapeNode.name = "ribbon\(i)"
+            nodes.append(shapeNode)
+            addNodeToScene(node: shapeNode)
         }
     }
     
@@ -94,22 +141,23 @@ class ARViewController: UIViewController {
         addNodeToScene(node: node)
         return node
     }
+
     
     func addNodeToScene(node:SCNNode){
         self.sceneView.scene.rootNode.addChildNode(node)
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first!
-        let location = touch.location(in: sceneView)
-        let hitResults = sceneView.hitTest(location, types: [.existingPlaneUsingExtent, .featurePoint])
-        if hitResults.count > 0 {
-            let result: ARHitTestResult = hitResults.first!
-            let newLocation = SCNVector3Make(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y/3, result.worldTransform.columns.3.z)
-            //addParticleNode(position: newLocation)
-            addSphereNode(position: newLocation)
-        }
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        let touch = touches.first!
+//        let location = touch.location(in: sceneView)
+//        let hitResults = sceneView.hitTest(location, types: [.existingPlaneUsingExtent, .featurePoint])
+//        if hitResults.count > 0 {
+//            let result: ARHitTestResult = hitResults.first!
+//            let newLocation = SCNVector3Make(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y/3, result.worldTransform.columns.3.z)
+//            //addParticleNode(position: newLocation)
+//            addSphereNode(position: newLocation)
+//        }
+//    }
     
 
 }
@@ -120,17 +168,35 @@ extension ARViewController: MusicLoaderDelegate{
     }
     
     func dealWithFFTMagnitudes(magnitudes: [Float]) {
+        #if DEBUG
         print("Magnitude count: \(magnitudes.count)")
+        #endif
         
         for (index, magnitude) in magnitudes.enumerated()
         {
-            
+            if Settings.shared.visualizationType == "Sphere"{
+                updateNodeScalesWithFFT(index: index, magnitude: magnitude)
+            }
+            else if Settings.shared.visualizationType == "Ribbon"{
+                updateRibbonNodes(index: index, magnitude: magnitude)
+            }
+            //updateRibbonNodes(index: index, magnitude: magnitude)
             
             //updateNodeScalesWithFFT(index: index, magnitude: magnitude)
         }
         
     }
 
+    func updateRibbonNodes(index:Int, magnitude:Float){
+        guard nodes.count > index else {
+            return
+        }
+        if let shape = nodes[index].geometry as? SCNShape{
+            FigureManager.animate(shape: shape, duration: magnitude * 100000)
+        }
+        
+        
+    }
     
     func updateNodeScalesWithFFT(index:Int, magnitude:Float){
         

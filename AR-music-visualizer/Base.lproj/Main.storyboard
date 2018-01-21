@@ -10,17 +10,30 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Debug 2-->
+        <!--Settings-->
         <scene sceneID="VnL-Ep-aAA">
             <objects>
-                <viewController id="oCG-3k-bTN" sceneMemberID="viewController">
+                <viewController id="oCG-3k-bTN" customClass="SettingsViewController" customModule="AR_music_visualizer" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hCa-ON-iXm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LpN-Mk-iC9">
+                                <rect key="frame" x="0.0" y="252" width="375" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="oCG-3k-bTN" id="sIK-s3-A4B"/>
+                                    <outlet property="delegate" destination="oCG-3k-bTN" id="kls-ML-6c4"/>
+                                </connections>
+                            </pickerView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Pib-WA-ye5"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Debug 2" id="f8L-Mf-dmc"/>
+                    <tabBarItem key="tabBarItem" title="Settings" id="f8L-Mf-dmc"/>
+                    <connections>
+                        <outlet property="pickerView" destination="LpN-Mk-iC9" id="2or-FK-41F"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9G-jI-LvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
