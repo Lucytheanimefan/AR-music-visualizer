@@ -91,7 +91,7 @@ class ARViewController: UIViewController {
         shapeNode.name = "initialRibbon"
         nodes.append(shapeNode)
         addNodeToScene(node: shapeNode)
-        FigureManager.animate(shape: shape, duration: 10.0)
+        FigureManager.animate(shape: shape, magnitude: 1.0)
     }
     
     func addRibbons(){
@@ -109,17 +109,17 @@ class ARViewController: UIViewController {
             //let path = UIBezierPath(arcCenter: CGPoint(x:CGFloat(x),y:CGFloat(y)) , radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
             
             let path = UIBezierPath()
-            path.move(to: CGPoint.zero/*CGPoint(x: 10*x, y: y)*/ )
-            path.addLine(to: CGPoint(x: 10*x, y: 10*y))
+            path.move(to: CGPoint(x: i, y:0 ))
+            //path.move(to: CGPoint.zero)
+            path.addLine(to: CGPoint(x: 5*x, y: 5*y))
 //            path.addQuadCurve(to: CGPoint(x: 10*x, y: y), controlPoint: CGPoint(x: 5*x, y: 20*y))
 //            path.addLine(to: CGPoint(x: 9.9*x, y: 0))
 //            path.addQuadCurve(to: CGPoint(x: x, y: 0), controlPoint: CGPoint(x: 5*x, y: 19.8*y))
 //
 
-            
-            let shape = FigureManager.extrudePath(path: path, depth: 10.0)
+            let shape = FigureManager.extrudePath(path: path, depth: 0.5)
             let shapeNode = SCNNode(geometry: shape)
-            shapeNode.pivot = SCNMatrix4MakeTranslation(Float(x), 0, 0)
+            shapeNode.pivot = SCNMatrix4MakeTranslation(Float(x), Float(y), 0)
             shapeNode.eulerAngles.y = Float(-Double.pi/4)
             shapeNode.name = "ribbon\(i)"
             nodes.append(shapeNode)
@@ -204,10 +204,35 @@ extension ARViewController: MusicLoaderDelegate{
         guard nodes.count > index else {
             return
         }
-        if let shape = nodes[index].geometry as? SCNShape{
-            FigureManager.animate(shape: shape, duration: magnitude * 10000)
+        
+        let node = nodes[index]
+        
+        //var point:CGPoint = .zero
+        if let shape = node.geometry as? SCNShape{
+//            if let pt = shape.path?.currentPoint{
+//                point = pt
+//            }
+            // TODO: refactor
+            FigureManager.animate(shape: shape, magnitude: CGFloat(magnitude*100000))
         }
-
+        
+        // Remove the node
+//        node.removeFromParentNode()
+//
+//        // Create a new node
+//        let path = UIBezierPath()
+//        path.move(to: point)
+//
+//        let val = CGFloat(100*magnitude)
+//        path.addLine(to: CGPoint(x: val, y: val))
+//
+//        let shape = FigureManager.extrudePath(path: path, depth: 0.5)
+//        let shapeNode = SCNNode(geometry: shape)
+//        shapeNode.pivot = SCNMatrix4MakeTranslation(Float(val), Float(val), 0)
+//        shapeNode.eulerAngles.y = Float(-Double.pi/4)
+//        shapeNode.name = "ribbon\(index)"
+//        nodes.insert(shapeNode, at: index)
+//        addNodeToScene(node: shapeNode)
     }
     
     func updateNodeScalesWithFFT(index:Int, magnitude:Float){
