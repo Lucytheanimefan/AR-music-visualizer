@@ -111,15 +111,15 @@ class ARViewController: UIViewController {
             let path = UIBezierPath()
             path.move(to: CGPoint(x: i, y:0 ))
             //path.move(to: CGPoint.zero)
-            path.addLine(to: CGPoint(x: 5*x, y: 5*y))
-//            path.addQuadCurve(to: CGPoint(x: 10*x, y: y), controlPoint: CGPoint(x: 5*x, y: 20*y))
-//            path.addLine(to: CGPoint(x: 9.9*x, y: 0))
-//            path.addQuadCurve(to: CGPoint(x: x, y: 0), controlPoint: CGPoint(x: 5*x, y: 19.8*y))
-//
+            path.addLine(to: CGPoint(x: 5*x, y: 3*y))
+            //            path.addQuadCurve(to: CGPoint(x: 10*x, y: y), controlPoint: CGPoint(x: 5*x, y: 20*y))
+            //            path.addLine(to: CGPoint(x: 9.9*x, y: 0))
+            //            path.addQuadCurve(to: CGPoint(x: x, y: 0), controlPoint: CGPoint(x: 5*x, y: 19.8*y))
+            //
 
-            let shape = FigureManager.extrudePath(path: path, depth: 0.5)
+            let shape = FigureManager.extrudePath(path: path, depth: 0.05)
             let shapeNode = SCNNode(geometry: shape)
-            shapeNode.pivot = SCNMatrix4MakeTranslation(Float(x), Float(y), 0)
+            shapeNode.pivot = SCNMatrix4MakeTranslation(Float(x), Float(y), Float(x))
             shapeNode.eulerAngles.y = Float(-Double.pi/4)
             shapeNode.name = "ribbon\(i)"
             nodes.append(shapeNode)
@@ -213,7 +213,7 @@ extension ARViewController: MusicLoaderDelegate{
 //                point = pt
 //            }
             // TODO: refactor
-            FigureManager.animate(shape: shape, magnitude: CGFloat(magnitude*100000))
+            FigureManager.animateRibbon(shape: shape, magnitude: CGFloat(magnitude*100000))
         }
         
         // Remove the node

@@ -53,7 +53,8 @@ class ARManager: NSObject {
                                                         ARSession.RunOptions.resetTracking])
     }
     
-    func createParticleSystem() -> SCNNode?{
+    func createParticleSystem() -> SCNNode?
+    {
         var systemNode:SCNNode!
         if let particleSystem = SCNParticleSystem(named: "Explosion", inDirectory: nil){
             systemNode = SCNNode()
@@ -61,8 +62,10 @@ class ARManager: NSObject {
         }
         return systemNode
     }
+    
+    
 
-   
+
 }
 
 extension ARManager: ARSCNViewDelegate{

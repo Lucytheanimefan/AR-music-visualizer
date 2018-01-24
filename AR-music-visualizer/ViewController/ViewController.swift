@@ -124,12 +124,7 @@ class ViewController: UIViewController {
     @IBAction func openItunesLibrary(_ sender: UIButton) {
         displayMediaPicker()
     }
-    
-    @IBAction func debugGo(_ sender: UIButton) {
-//        if let url = Bundle.main.url(forResource: "angel_beats_short", withExtension: "wav"){
-//            MusicLoader.shared.begin(file: url)
-//        }
-    }
+
     
     @IBAction func goToVisualization(_ sender: UIButton) {
         performSegue(withIdentifier: "ARVisualizationSegue", sender: self)
@@ -172,9 +167,6 @@ extension ViewController: MPMediaPickerControllerDelegate{
         
         mediaPicker.dismiss(animated: true, completion: nil)
     }
-    //}
-    
-    
 }
 
 extension UIViewController{
@@ -190,16 +182,4 @@ extension UIViewController{
     }
 }
 
-//extension ViewController: MusicLoaderDelegate{
-//    func onPlay() {
-//        os_log("%@: ON PLAY", self.description)
-//
-//    }
-//
-//    func dealWithFFTMagnitudes(magnitudes: [Float]) {
-//        DispatchQueue.main.async {
-//            self.debugView.text = magnitudes.description
-//        }
-//    }
-//}
 

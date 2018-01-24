@@ -78,6 +78,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7C396C7C2017BF92009E37E0 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				7C7C1CFA2003C2A600C000F2 /* ViewController.swift */,
+				7C0CD4A82009895D00F39134 /* ARViewController.swift */,
+				7C396C72201414D1009E37E0 /* SettingsViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		7C396C7D2017BFAB009E37E0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7C0CD4AA200989A100F39134 /* ARManager.swift */,
+				7C0CD49B2007A86800F39134 /* FFTTransformer.swift */,
+				7C0CD4972007A4FA00F39134 /* MusicLoader.swift */,
+				7C396C702014083B009E37E0 /* FigureManager.swift */,
+				7C396C7420141561009E37E0 /* Settings.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7C7C1CEC2003C2A600C000F2 = {
 			isa = PBXGroup;
 			children = (
@@ -99,23 +121,17 @@
 		7C7C1CF72003C2A600C000F2 /* AR-music-visualizer */ = {
 			isa = PBXGroup;
 			children = (
+				7C396C7D2017BFAB009E37E0 /* Model */,
+				7C396C7C2017BF92009E37E0 /* ViewController */,
 				7C0CD4AC200A519600F39134 /* spark.png */,
 				7C7C1CF82003C2A600C000F2 /* AppDelegate.swift */,
-				7C7C1CFA2003C2A600C000F2 /* ViewController.swift */,
 				7C7C1CFC2003C2A600C000F2 /* Main.storyboard */,
 				7C0CD49D2007AB5900F39134 /* angel_beats_short.wav */,
 				7C7C1CFF2003C2A600C000F2 /* Assets.xcassets */,
 				7C7C1D012003C2A600C000F2 /* LaunchScreen.storyboard */,
 				7C7C1D042003C2A600C000F2 /* Info.plist */,
-				7C0CD4972007A4FA00F39134 /* MusicLoader.swift */,
-				7C0CD49B2007A86800F39134 /* FFTTransformer.swift */,
-				7C0CD4A82009895D00F39134 /* ARViewController.swift */,
-				7C0CD4AA200989A100F39134 /* ARManager.swift */,
 				7C0CD4AE200A56D500F39134 /* Explosion.scnp */,
 				7CA2446F200AA4D900020BFE /* Constants.swift */,
-				7C396C702014083B009E37E0 /* FigureManager.swift */,
-				7C396C72201414D1009E37E0 /* SettingsViewController.swift */,
-				7C396C7420141561009E37E0 /* Settings.swift */,
 			);
 			path = "AR-music-visualizer";
 			sourceTree = "<group>";

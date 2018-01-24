@@ -94,14 +94,6 @@
                                     <segue destination="bwJ-dC-M0L" kind="presentation" identifier="ARVisualizationSegue" id="YnO-b6-AtU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sg7-oB-fdV">
-                                <rect key="frame" x="144" y="462" width="79" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Go (debug)"/>
-                                <connections>
-                                    <action selector="debugGo:" destination="BYZ-38-t0r" eventType="touchUpInside" id="meB-hF-u4v"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
