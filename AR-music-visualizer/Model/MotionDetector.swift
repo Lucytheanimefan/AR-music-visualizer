@@ -25,12 +25,17 @@ protocol MotionDetectorDelegate
 
 class MotionDetector: NSObject {
 
-    let activityManager = CMMotionActivityManager()
-    let motionManager = CMMotionManager()
+    var activityManager:CMMotionActivityManager!
+    var motionManager:CMMotionManager!
     var delegate:MotionDetectorDelegate?
     
-    static let shared = MotionDetector()
+    //static let shared = MotionDetector()
 
+    init(activityManager:CMMotionActivityManager, motionManager:CMMotionManager) {
+        super.init()
+        self.activityManager = activityManager
+        self.motionManager = motionManager
+    }
     
     func startActivityDetection(){
         //let activityQueue = OperationQueue()

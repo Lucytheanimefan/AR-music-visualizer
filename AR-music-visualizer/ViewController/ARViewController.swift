@@ -32,7 +32,8 @@ class ARViewController: UIViewController {
         return spotLight
     }()
     
-    let activityManager = CMMotionActivityManager()
+    //let activityManager = CMMotionActivityManager()
+    var motionDetector:MotionDetector!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,8 +44,8 @@ class ARViewController: UIViewController {
         self.sceneView.pointOfView?.light = spotLight
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
-        MotionDetector.shared.delegate = self
-
+        self.motionDetector = MotionDetector(activityManager: CMMotionActivityManager(), motionManager: CMMotionManager())
+        self.motionDetector.delegate = self
         self.debugTextView.minimizeView()
     }
     
@@ -71,8 +72,8 @@ class ARViewController: UIViewController {
         self.beginButton.isEnabled = false
         
         // Start motion stuff
-        MotionDetector.shared.startActivityDetection()
-//        self.activityManager.startActivityUpdates(to: OperationQueue.main) { (motion) in
+        self.motionDetector.startActivityDetection()
+//        self.activityManager.startActivityUpdates(to: OperationQueue.current!) { (motion) in
 //            if let motion = motion{
 //                if (motion.automotive)
 //                {
@@ -239,7 +240,7 @@ extension ARViewController: MusicLoaderDelegate{
         }
         
     }
-
+    
     func updateRibbonNodes(index:Int, magnitude:Float){
         guard nodes.count > index else {
             return
@@ -247,7 +248,7 @@ extension ARViewController: MusicLoaderDelegate{
         
         let node = nodes[index]
         
-
+        
         if let shape = node.geometry as? SCNShape{
             FigureManager.animateRibbon(shape: shape, magnitude: CGFloat(magnitude*100000))
         }
@@ -295,44 +296,44 @@ extension ARViewController: SettingsDelegate {
 extension ARViewController: MotionDetectorDelegate{
     func automotiveAction() {
         os_log("%@: Automotive", self.description)
-        DispatchQueue.main.sync {
-            self.debugTextView.text = "Automotive"
-        }
+        
+        self.debugTextView.text = "Automotive"
+        
     }
     
     func stationaryAction() {
         os_log("%@: stationary", self.description)
-        //DispatchQueue.main.sync {
-            self.debugTextView.text = "Stationary"
-        //}
+        
+        self.debugTextView.text = "Stationary"
+        
     }
     
     func walkingAction() {
         os_log("%@: Walking", self.description)
-        //DispatchQueue.main.sync {
-            self.debugTextView.text = "Walking"
-        //}
+        
+        self.debugTextView.text = "Walking"
+        
     }
     
     func runningAction() {
         os_log("%@: Running", self.description)
-        //DispatchQueue.main.async {
+        
         self.debugTextView.text = "Running"
-        //}
+        
     }
     
     func cyclingAction() {
         os_log("%@: Cycling", self.description)
-        DispatchQueue.main.sync {
-            self.debugTextView.text = "Cycling"
-        }
+        
+        self.debugTextView.text = "Cycling"
+        
     }
     
     func unknownAction() {
         os_log("%@: Unknown", self.description)
-        DispatchQueue.main.sync {
-            self.debugTextView.text = "Unknown"
-        }
+        
+        self.debugTextView.text = "Unknown"
+        
     }
     
     func gyroScopeHandler(data: CMGyroData?) {
