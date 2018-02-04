@@ -24,6 +24,8 @@
 		7C7C1D032003C2A600C000F2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7C7C1D012003C2A600C000F2 /* LaunchScreen.storyboard */; };
 		7C7C1D0E2003C2A600C000F2 /* AR_music_visualizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C7C1D0D2003C2A600C000F2 /* AR_music_visualizerTests.swift */; };
 		7CA24470200AA4D900020BFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2446F200AA4D900020BFE /* Constants.swift */; };
+		7CD233DE20278C11003C5799 /* MotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD233DD20278C11003C5799 /* MotionDetector.swift */; };
+		7CD233E2202797F2003C5799 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD233E1202797F2003C5799 /* DebugView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,8 @@
 		7C7C1D0D2003C2A600C000F2 /* AR_music_visualizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AR_music_visualizerTests.swift; sourceTree = "<group>"; };
 		7C7C1D0F2003C2A600C000F2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7CA2446F200AA4D900020BFE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7CD233DD20278C11003C5799 /* MotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDetector.swift; sourceTree = "<group>"; };
+		7CD233E1202797F2003C5799 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 				7C0CD4972007A4FA00F39134 /* MusicLoader.swift */,
 				7C396C702014083B009E37E0 /* FigureManager.swift */,
 				7C396C7420141561009E37E0 /* Settings.swift */,
+				7CD233DD20278C11003C5799 /* MotionDetector.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 				7C7C1D042003C2A600C000F2 /* Info.plist */,
 				7C0CD4AE200A56D500F39134 /* Explosion.scnp */,
 				7CA2446F200AA4D900020BFE /* Constants.swift */,
+				7CD233E1202797F2003C5799 /* DebugView.swift */,
 			);
 			path = "AR-music-visualizer";
 			sourceTree = "<group>";
@@ -251,12 +257,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7CD233E2202797F2003C5799 /* DebugView.swift in Sources */,
 				7C0CD4982007A4FA00F39134 /* MusicLoader.swift in Sources */,
 				7C7C1CFB2003C2A600C000F2 /* ViewController.swift in Sources */,
 				7C7C1CF92003C2A600C000F2 /* AppDelegate.swift in Sources */,
 				7C396C712014083B009E37E0 /* FigureManager.swift in Sources */,
 				7C396C7520141561009E37E0 /* Settings.swift in Sources */,
 				7C0CD49C2007A86800F39134 /* FFTTransformer.swift in Sources */,
+				7CD233DE20278C11003C5799 /* MotionDetector.swift in Sources */,
 				7CA24470200AA4D900020BFE /* Constants.swift in Sources */,
 				7C0CD4AB200989A100F39134 /* ARManager.swift in Sources */,
 				7C0CD4A92009895D00F39134 /* ARViewController.swift in Sources */,

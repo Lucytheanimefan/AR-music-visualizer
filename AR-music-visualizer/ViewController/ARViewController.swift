@@ -9,20 +9,19 @@
 import UIKit
 import ARKit
 import os.log
+import CoreMotion
 
 class ARViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
-    
     var musicFilePath:URL!
-    
     var musicLoader:MusicLoader!
-    
     var manager: ARManager!
-    
     var nodes:[SCNNode] = [SCNNode]()
     
     @IBOutlet weak var beginButton: UIBarButtonItem!
+  
+    @IBOutlet weak var debugTextView: UITextView!
     
     fileprivate lazy var spotLight: SCNLight = {
         let spotLight = SCNLight()
@@ -33,6 +32,8 @@ class ARViewController: UIViewController {
         return spotLight
     }()
     
+    let activityManager = CMMotionActivityManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         Settings.shared.delegate = self
@@ -42,11 +43,9 @@ class ARViewController: UIViewController {
         self.sceneView.pointOfView?.light = spotLight
         self.musicLoader = MusicLoader()
         self.musicLoader.delegate = self
-        
-        //addRibbons()
-        //createInitialPath()
-        //addSpheres()
-        
+        MotionDetector.shared.delegate = self
+
+        self.debugTextView.minimizeView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -70,7 +69,48 @@ class ARViewController: UIViewController {
     @IBAction func begin(_ sender: UIBarButtonItem) {
         self.musicLoader.begin(file: self.musicFilePath)
         self.beginButton.isEnabled = false
+        
+        // Start motion stuff
+        MotionDetector.shared.startActivityDetection()
+//        self.activityManager.startActivityUpdates(to: OperationQueue.main) { (motion) in
+//            if let motion = motion{
+//                if (motion.automotive)
+//                {
+//                    self.automotiveAction()
+//                }
+//                else if (motion.stationary)
+//                {
+//                    self.stationaryAction()
+//                }
+//                else if (motion.walking)
+//                {
+//                    self.walkingAction()
+//                }
+//                else if(motion.running)
+//                {
+//                    self.runningAction()
+//                }
+//                else if (motion.cycling)
+//                {
+//                    self.cyclingAction()
+//                }
+//                else if (motion.unknown)
+//                {
+//                    self.unknownAction()
+//                }
+//            }
+//        }
+        
     }
+    
+    @IBAction func debug(_ sender: UIBarButtonItem) {
+        if (self.debugTextView.frame.height == 0){
+            self.debugTextView.maximizeView()
+        }else{
+            self.debugTextView.minimizeView()
+        }
+    }
+    
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true) {
@@ -111,7 +151,7 @@ class ARViewController: UIViewController {
             let path = UIBezierPath()
             path.move(to: CGPoint(x: i, y:0 ))
             //path.move(to: CGPoint.zero)
-            path.addLine(to: CGPoint(x: 5*x, y: 3*y))
+            path.addLine(to: CGPoint(x: 2*x, y: 3*y))
             //            path.addQuadCurve(to: CGPoint(x: 10*x, y: y), controlPoint: CGPoint(x: 5*x, y: 20*y))
             //            path.addLine(to: CGPoint(x: 9.9*x, y: 0))
             //            path.addQuadCurve(to: CGPoint(x: x, y: 0), controlPoint: CGPoint(x: 5*x, y: 19.8*y))
@@ -207,32 +247,11 @@ extension ARViewController: MusicLoaderDelegate{
         
         let node = nodes[index]
         
-        //var point:CGPoint = .zero
+
         if let shape = node.geometry as? SCNShape{
-//            if let pt = shape.path?.currentPoint{
-//                point = pt
-//            }
-            // TODO: refactor
             FigureManager.animateRibbon(shape: shape, magnitude: CGFloat(magnitude*100000))
         }
         
-        // Remove the node
-//        node.removeFromParentNode()
-//
-//        // Create a new node
-//        let path = UIBezierPath()
-//        path.move(to: point)
-//
-//        let val = CGFloat(100*magnitude)
-//        path.addLine(to: CGPoint(x: val, y: val))
-//
-//        let shape = FigureManager.extrudePath(path: path, depth: 0.5)
-//        let shapeNode = SCNNode(geometry: shape)
-//        shapeNode.pivot = SCNMatrix4MakeTranslation(Float(val), Float(val), 0)
-//        shapeNode.eulerAngles.y = Float(-Double.pi/4)
-//        shapeNode.name = "ribbon\(index)"
-//        nodes.insert(shapeNode, at: index)
-//        addNodeToScene(node: shapeNode)
     }
     
     func updateNodeScalesWithFFT(index:Int, magnitude:Float){
@@ -241,9 +260,6 @@ extension ARViewController: MusicLoaderDelegate{
         
         let s = SCNVector3Make(m, m, m)
         nodes[index].scale = s
-        
-        //let q = SCNVector4Make(m, m, m, m)
-        //nodes[index].rotate(by: q, aroundTarget: rotate)
         
     }
 }
@@ -272,6 +288,79 @@ extension ARViewController: SettingsDelegate {
     func removeAllNodes(){
         self.sceneView.scene.rootNode.childNodes.forEach { (node) in
             node.removeFromParentNode()
+        }
+    }
+}
+
+extension ARViewController: MotionDetectorDelegate{
+    func automotiveAction() {
+        os_log("%@: Automotive", self.description)
+        DispatchQueue.main.sync {
+            self.debugTextView.text = "Automotive"
+        }
+    }
+    
+    func stationaryAction() {
+        os_log("%@: stationary", self.description)
+        //DispatchQueue.main.sync {
+            self.debugTextView.text = "Stationary"
+        //}
+    }
+    
+    func walkingAction() {
+        os_log("%@: Walking", self.description)
+        //DispatchQueue.main.sync {
+            self.debugTextView.text = "Walking"
+        //}
+    }
+    
+    func runningAction() {
+        os_log("%@: Running", self.description)
+        //DispatchQueue.main.async {
+        self.debugTextView.text = "Running"
+        //}
+    }
+    
+    func cyclingAction() {
+        os_log("%@: Cycling", self.description)
+        DispatchQueue.main.sync {
+            self.debugTextView.text = "Cycling"
+        }
+    }
+    
+    func unknownAction() {
+        os_log("%@: Unknown", self.description)
+        DispatchQueue.main.sync {
+            self.debugTextView.text = "Unknown"
+        }
+    }
+    
+    func gyroScopeHandler(data: CMGyroData?) {
+        
+    }
+    
+    func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?) {
+        
+    }
+    
+    func accelerometerHandler(accelData: CMAccelerometerData?) {
+        
+    }
+    
+    
+}
+
+extension UITextView{
+    func minimizeView(){
+        //self.frame.size.height = 0
+        UIView.animate(withDuration: 0.25) {
+            self.frame.size.height = 0
+        }
+    }
+    
+    func maximizeView(){
+        UIView.animate(withDuration: 0.25) {
+            self.frame.size.height = 100
         }
     }
 }

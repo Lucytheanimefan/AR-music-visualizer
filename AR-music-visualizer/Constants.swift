@@ -10,4 +10,5 @@ import Foundation
 
 struct Constants{
     static let FRAME_COUNT = 64
+    static let updateInterval:TimeInterval = 1
 }

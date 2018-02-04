@@ -135,13 +135,25 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vwf-X4-teO">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
                                 <items>
-                                    <barButtonItem title="Begin" id="Gh5-8L-Ztq">
+                                    <barButtonItem title="Begin" systemItem="play" id="Gh5-8L-Ztq">
                                         <connections>
                                             <action selector="begin:" destination="bwJ-dC-M0L" id="YOF-hv-wLn"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem title="Debug" id="BoX-fb-VX0">
+                                        <connections>
+                                            <action selector="debug:" destination="bwJ-dC-M0L" id="Ctw-tQ-SiL"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" text="Test text!" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="a8c-el-8J8">
+                                <rect key="frame" x="0.0" y="495" width="375" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -162,12 +174,13 @@
                     </view>
                     <connections>
                         <outlet property="beginButton" destination="Gh5-8L-Ztq" id="LOQ-FB-UiG"/>
+                        <outlet property="debugTextView" destination="a8c-el-8J8" id="6Hk-bC-dBz"/>
                         <outlet property="sceneView" destination="S2g-fw-2TB" id="JdP-Eg-c8J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0R5-KH-F9R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="464.80000000000001" y="-138.0809595202399"/>
+            <point key="canvasLocation" x="416.80000000000001" y="-138.0809595202399"/>
         </scene>
     </scenes>
 </document>

@@ -171,7 +171,7 @@ extension ViewController: MPMediaPickerControllerDelegate{
 
 extension UIViewController{
     
-    func presentMessage(title:String, message:String){
+    func presentMessage(title:String, message:String) -> UIAlertController{
         let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler:{(alert: UIAlertAction!) in
             self.dismiss(animated: true, completion: nil)
@@ -179,6 +179,7 @@ extension UIViewController{
         DispatchQueue.main.async {
             self.present(alert, animated: true, completion: nil)
         }
+        return alert
     }
 }
 
