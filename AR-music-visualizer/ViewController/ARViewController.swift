@@ -263,6 +263,12 @@ extension ARViewController: MusicLoaderDelegate{
         nodes[index].scale = s
         
     }
+    
+    func changeNodeColor(nodes:[SCNNode], color: UIColor){
+        nodes.forEach { (node) in
+            node.geometry?.firstMaterial?.diffuse.contents = color
+        }
+    }
 }
 
 extension ARViewController: SCNPhysicsContactDelegate{
@@ -312,6 +318,7 @@ extension ARViewController: MotionDetectorDelegate{
         os_log("%@: Walking", self.description)
         
         self.debugTextView.text = "Walking"
+        self.changeNodeColor(nodes: self.nodes, color: UIColor.green)
         
     }
     
@@ -319,6 +326,7 @@ extension ARViewController: MotionDetectorDelegate{
         os_log("%@: Running", self.description)
         
         self.debugTextView.text = "Running"
+        self.changeNodeColor(nodes: self.nodes, color: UIColor.red)
         
     }
     
