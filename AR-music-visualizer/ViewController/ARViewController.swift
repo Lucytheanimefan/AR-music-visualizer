@@ -73,34 +73,9 @@ class ARViewController: UIViewController {
         
         // Start motion stuff
         self.motionDetector.startActivityDetection()
-//        self.activityManager.startActivityUpdates(to: OperationQueue.current!) { (motion) in
-//            if let motion = motion{
-//                if (motion.automotive)
-//                {
-//                    self.automotiveAction()
-//                }
-//                else if (motion.stationary)
-//                {
-//                    self.stationaryAction()
-//                }
-//                else if (motion.walking)
-//                {
-//                    self.walkingAction()
-//                }
-//                else if(motion.running)
-//                {
-//                    self.runningAction()
-//                }
-//                else if (motion.cycling)
-//                {
-//                    self.cyclingAction()
-//                }
-//                else if (motion.unknown)
-//                {
-//                    self.unknownAction()
-//                }
-//            }
-//        }
+        self.motionDetector.gyroScopeUpdate()
+        self.motionDetector.accelerometerUpdates()
+
         
     }
     
@@ -269,6 +244,11 @@ extension ARViewController: MusicLoaderDelegate{
             node.geometry?.firstMaterial?.diffuse.contents = color
         }
     }
+    
+    func appendAttributedDebugText(text:String){
+        let text = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font:UIFont(name: "AvenirNext-Medium", size: 14)])
+        self.debugTextView.attributedText = text
+    }
 }
 
 extension ARViewController: SCNPhysicsContactDelegate{
@@ -310,7 +290,7 @@ extension ARViewController: MotionDetectorDelegate{
     func stationaryAction() {
         os_log("%@: stationary", self.description)
         
-        self.debugTextView.text = "Stationary"
+        appendAttributedDebugText(text: "Stationary")
         self.changeNodeColor(nodes: self.nodes, color: .blue)
         
     }
@@ -318,7 +298,7 @@ extension ARViewController: MotionDetectorDelegate{
     func walkingAction() {
         os_log("%@: Walking", self.description)
         
-        self.debugTextView.text = "Walking"
+        appendAttributedDebugText(text: "Walking")
         self.changeNodeColor(nodes: self.nodes, color: UIColor.green)
         
     }
@@ -326,7 +306,7 @@ extension ARViewController: MotionDetectorDelegate{
     func runningAction() {
         os_log("%@: Running", self.description)
         
-        self.debugTextView.text = "Running"
+        appendAttributedDebugText(text: "Running")
         self.changeNodeColor(nodes: self.nodes, color: UIColor.red)
         
     }
@@ -347,15 +327,45 @@ extension ARViewController: MotionDetectorDelegate{
     }
     
     func gyroScopeHandler(data: CMGyroData?) {
+//        self.nodes.forEach { (node) in
+//            if let data = data{
+//                //node.position = SCNVector3Make(Float(data.rotationRate.x), Float(data.rotationRate.y), Float(data.rotationRate.z))
+//                if let sphere = node.geometry as? SCNSphere{
+//                    let maxRot = abs(max(max(data.rotationRate.x, data.rotationRate.y), data.rotationRate.z))
+//                    sphere.segmentCount = Int(1/maxRot)
+//                    //self.debugTextView.text = ("Max rot: \(maxRot)")
+//                }
+//            }
+//        }
         
+//        if let data = data{
+//            let x = abs(data.rotationRate.x)
+//            let y = abs(data.rotationRate.y)
+//            let z = abs(data.rotationRate.z)
+//            let r = (x < 1) ? x*265:x
+//            let g = (y < 1) ? y*265:y
+//            let b = (z < 1) ? z*265:z
+//            let color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+//            self.changeNodeColor(nodes: self.nodes, color: color)
+//        }
     }
     
     func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?) {
-        
+    
     }
     
     func accelerometerHandler(accelData: CMAccelerometerData?) {
-        
+        if let accelData = accelData{
+            let x = abs(accelData.acceleration.x)
+            let y = abs(accelData.acceleration.y)
+            let z = abs(accelData.acceleration.z)
+            let r = (x < 1) ? x*265:x
+            let g = (y < 1) ? y*265:y
+            let b = (z < 1) ? z*265:z
+            let color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+            self.changeNodeColor(nodes: self.nodes, color: color)
+            self.debugTextView.text.append("\n Accel: \(accelData.description)")
+        }
     }
     
     
