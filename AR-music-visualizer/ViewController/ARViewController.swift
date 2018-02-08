@@ -311,6 +311,7 @@ extension ARViewController: MotionDetectorDelegate{
         os_log("%@: stationary", self.description)
         
         self.debugTextView.text = "Stationary"
+        self.changeNodeColor(nodes: self.nodes, color: .blue)
         
     }
     
@@ -341,6 +342,7 @@ extension ARViewController: MotionDetectorDelegate{
         os_log("%@: Unknown", self.description)
         
         self.debugTextView.text = "Unknown"
+        self.changeNodeColor(nodes: self.nodes, color: .white)
         
     }
     
