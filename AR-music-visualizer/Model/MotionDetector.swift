@@ -12,12 +12,12 @@ import Foundation
 
 protocol MotionDetectorDelegate
 {
-    func automotiveAction()
-    func stationaryAction()
-    func walkingAction()
-    func runningAction()
-    func cyclingAction()
-    func unknownAction()
+    func automotiveAction(confidence:CMMotionActivityConfidence)
+    func stationaryAction(confidence:CMMotionActivityConfidence)
+    func walkingAction(confidence:CMMotionActivityConfidence)
+    func runningAction(confidence:CMMotionActivityConfidence)
+    func cyclingAction(confidence:CMMotionActivityConfidence)
+    func unknownAction(confidence:CMMotionActivityConfidence)
     func gyroScopeHandler(data:CMGyroData?)
     func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?)
     func accelerometerHandler(accelData: CMAccelerometerData?)
@@ -40,30 +40,31 @@ class MotionDetector: NSObject {
     func startActivityDetection(){
         //let activityQueue = OperationQueue()
         self.activityManager.startActivityUpdates(to: OperationQueue.current!) { (motion) in
+    
             if let motion = motion{
                 if (motion.automotive)
                 {
-                    self.delegate?.automotiveAction()
+                    self.delegate?.automotiveAction(confidence: motion.confidence)
                 }
                 else if (motion.stationary)
                 {
-                    self.delegate?.stationaryAction()
+                    self.delegate?.stationaryAction(confidence: motion.confidence)
                 }
                 else if (motion.walking)
                 {
-                    self.delegate?.walkingAction()
+                    self.delegate?.walkingAction(confidence: motion.confidence)
                 }
                 else if(motion.running)
                 {
-                    self.delegate?.runningAction()
+                    self.delegate?.runningAction(confidence: motion.confidence)
                 }
                 else if (motion.cycling)
                 {
-                    self.delegate?.cyclingAction()
+                    self.delegate?.cyclingAction(confidence: motion.confidence)
                 }
                 else if (motion.unknown)
                 {
-                    self.delegate?.unknownAction()
+                    self.delegate?.unknownAction(confidence: motion.confidence)
                 }
             }
         }

@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     
     var musicAssetURL:URL!
 
+    var motionDetector:MotionDetector!
+    
     @IBOutlet weak var debugView: UITextView!
     
     

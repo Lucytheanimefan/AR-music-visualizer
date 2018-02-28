@@ -35,7 +35,21 @@ class SettingsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    
+    @IBAction func motionDataSwitch(_ sender: UISwitch) {
+        if (sender.restorationIdentifier == "accel"){
+            Settings.shared.showAccelData = sender.isOn
+        }
+        else if (sender.restorationIdentifier == "gyro"){
+            Settings.shared.showGyroData = sender.isOn
+        }
+        else if (sender.restorationIdentifier == "motionClass"){
+            Settings.shared.showMotionCategory = sender.isOn
+        }
+        else if (sender.restorationIdentifier == "deviceMotion"){
+            Settings.shared.showDeviceMotionData = sender.isOn
+        }
+    }
 }
 
 

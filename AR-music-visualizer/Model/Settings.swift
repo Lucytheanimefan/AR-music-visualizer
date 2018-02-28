@@ -31,5 +31,10 @@ class Settings: NSObject {
     }
     
     static let shared = Settings()
+    
+    var showAccelData:Bool = false
+    var showGyroData:Bool = false
+    var showMotionCategory:Bool = true
+    var showDeviceMotionData:Bool = false
 
 }

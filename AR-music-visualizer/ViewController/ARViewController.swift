@@ -280,14 +280,14 @@ extension ARViewController: SettingsDelegate {
 }
 
 extension ARViewController: MotionDetectorDelegate{
-    func automotiveAction() {
+    func automotiveAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Automotive", self.description)
         
         self.debugTextView.text = "Automotive"
         
     }
     
-    func stationaryAction() {
+    func stationaryAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: stationary", self.description)
         
         appendAttributedDebugText(text: "Stationary")
@@ -295,7 +295,7 @@ extension ARViewController: MotionDetectorDelegate{
         
     }
     
-    func walkingAction() {
+    func walkingAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Walking", self.description)
         
         appendAttributedDebugText(text: "Walking")
@@ -303,7 +303,7 @@ extension ARViewController: MotionDetectorDelegate{
         
     }
     
-    func runningAction() {
+    func runningAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Running", self.description)
         
         appendAttributedDebugText(text: "Running")
@@ -311,14 +311,14 @@ extension ARViewController: MotionDetectorDelegate{
         
     }
     
-    func cyclingAction() {
+    func cyclingAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Cycling", self.description)
         
         self.debugTextView.text = "Cycling"
         
     }
     
-    func unknownAction() {
+    func unknownAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Unknown", self.description)
         
         self.debugTextView.text = "Unknown"
