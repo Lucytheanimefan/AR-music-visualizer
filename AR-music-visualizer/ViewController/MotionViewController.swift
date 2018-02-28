@@ -34,8 +34,13 @@ class MotionViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         // Start motion stuff
         self.motionDetector.startActivityDetection()
-        self.motionDetector.gyroScopeUpdate()
-        self.motionDetector.accelerometerUpdates()
+        self.motionDetector.motionUpdates()
+        //self.motionDetector.gyroScopeUpdate()
+        //self.motionDetector.accelerometerUpdates()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        self.tableViewData.removeAll()
     }
     
     func appendToTableView(newStuff:String){
@@ -106,12 +111,24 @@ extension MotionViewController: MotionDetectorDelegate{
         if (!Settings.shared.showGyroData){
             return
         }
+        //self.tableViewData.append("Rotation rate: \(data?.rotationRate.x),\(data?.rotationRate.y),\(data.rotationRate.z)")
     }
     
     func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?) {
         if (!Settings.shared.showDeviceMotionData){
             return
         }
+        
+        if (deviceMotion != nil){
+            self.tableViewData.append("Rotation rate: \(deviceMotion!.rotationRate.x),\(deviceMotion!.rotationRate.y),\(deviceMotion!.rotationRate.z)")
+            self.tableViewData.append("Acceleration: \(deviceMotion!.userAcceleration.x),\(deviceMotion!.userAcceleration.y), \(deviceMotion!.userAcceleration.z)")
+            self.tableViewData.append("Gravity: \(deviceMotion!.gravity.x),\(deviceMotion!.gravity.y),\(deviceMotion!.gravity.z)")
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+        
     }
     
     
