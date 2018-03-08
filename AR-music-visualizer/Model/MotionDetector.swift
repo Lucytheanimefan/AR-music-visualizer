@@ -66,7 +66,7 @@ class MotionDetector: NSObject {
                         }
                         
                         self.oldGravity = self.currentDeviceMotion!.gravity.y
-                        print("--Old gravity: \(self.oldGravity), new gravity: \(self.currentDeviceMotion!.gravity.y)")
+                        //print("--Old gravity: \(self.oldGravity), new gravity: \(self.currentDeviceMotion!.gravity.y)")
                         
                     }else{
                         print("Just stationary")

@@ -73,9 +73,9 @@ class ARViewController: UIViewController {
         
         // Start motion stuff
         self.motionDetector.startActivityDetection()
-        self.motionDetector.gyroScopeUpdate()
-        self.motionDetector.accelerometerUpdates()
-
+        //self.motionDetector.gyroScopeUpdate()
+        //self.motionDetector.accelerometerUpdates()
+        self.motionDetector.motionUpdates()
         
     }
     
@@ -165,6 +165,7 @@ class ARViewController: UIViewController {
     
     func addSphereNode(position: SCNVector3) -> SCNNode{
         let sphere = SCNSphere(radius: 0.1)
+        sphere.segmentCount = 10
         sphere.firstMaterial?.diffuse.contents = UIColor.blue
         let node = SCNNode()
         node.geometry = sphere
@@ -245,6 +246,14 @@ extension ARViewController: MusicLoaderDelegate{
         }
     }
     
+    func updateNodeSegmentCount(nodes:[SCNNode], segments:Int){
+        nodes.forEach { (node) in
+            if let sphere = node.geometry as? SCNSphere{
+                sphere.segmentCount = segments
+            }
+        }
+    }
+    
     func appendAttributedDebugText(text:String){
         let text = NSAttributedString(string: text, attributes: [NSAttributedStringKey.font:UIFont(name: "AvenirNext-Medium", size: 14)])
         self.debugTextView.attributedText = text
@@ -281,24 +290,25 @@ extension ARViewController: SettingsDelegate {
 
 extension ARViewController: MotionDetectorDelegate{
     func standingAction(confidence: CMMotionActivityConfidence) {
-        self.debugTextView.text = "Standing"
+        appendAttributedDebugText(text: "Standing")
+        updateNodeSegmentCount(nodes:self.nodes, segments:20)
     }
     
     func sittingAction(confidence: CMMotionActivityConfidence) {
-        self.debugTextView.text = "Sitting"
+        appendAttributedDebugText(text: "Sitting")
+        updateNodeSegmentCount(nodes:self.nodes, segments:10)
     }
     
     func automotiveAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Automotive", self.description)
-        
-        self.debugTextView.text = "Automotive"
+        appendAttributedDebugText(text: "Automotive")
         
     }
     
     func stationaryAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: stationary", self.description)
         
-        appendAttributedDebugText(text: "Stationary")
+        //appendAttributedDebugText(text: "Stationary")
         self.changeNodeColor(nodes: self.nodes, color: .blue)
         
     }
@@ -363,17 +373,17 @@ extension ARViewController: MotionDetectorDelegate{
     }
     
     func accelerometerHandler(accelData: CMAccelerometerData?) {
-        if let accelData = accelData{
-            let x = abs(accelData.acceleration.x)
-            let y = abs(accelData.acceleration.y)
-            let z = abs(accelData.acceleration.z)
-            let r = (x < 1) ? x*265:x
-            let g = (y < 1) ? y*265:y
-            let b = (z < 1) ? z*265:z
-            let color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
-            self.changeNodeColor(nodes: self.nodes, color: color)
-            self.debugTextView.text.append("\n Accel: \(accelData.description)")
-        }
+//        if let accelData = accelData{
+//            let x = abs(accelData.acceleration.x)
+//            let y = abs(accelData.acceleration.y)
+//            let z = abs(accelData.acceleration.z)
+//            let r = (x < 1) ? x*265:x
+//            let g = (y < 1) ? y*265:y
+//            let b = (z < 1) ? z*265:z
+//            let color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
+//            self.changeNodeColor(nodes: self.nodes, color: color)
+//            self.debugTextView.text.append("\n Accel: \(accelData.description)")
+//        }
     }
     
     
