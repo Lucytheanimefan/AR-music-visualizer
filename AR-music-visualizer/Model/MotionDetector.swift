@@ -14,6 +14,8 @@ protocol MotionDetectorDelegate
 {
     func automotiveAction(confidence:CMMotionActivityConfidence)
     func stationaryAction(confidence:CMMotionActivityConfidence)
+    func standingAction(confidence:CMMotionActivityConfidence)
+    func sittingAction(confidence:CMMotionActivityConfidence)
     func walkingAction(confidence:CMMotionActivityConfidence)
     func runningAction(confidence:CMMotionActivityConfidence)
     func cyclingAction(confidence:CMMotionActivityConfidence)
@@ -28,7 +30,8 @@ class MotionDetector: NSObject {
     var activityManager:CMMotionActivityManager!
     var motionManager:CMMotionManager!
     var delegate:MotionDetectorDelegate?
-    
+    var currentDeviceMotion:CMDeviceMotion?
+    var oldGravity:Double?
     //static let shared = MotionDetector()
 
     init(activityManager:CMMotionActivityManager, motionManager:CMMotionManager) {
@@ -48,7 +51,27 @@ class MotionDetector: NSObject {
                 }
                 else if (motion.stationary)
                 {
-                    self.delegate?.stationaryAction(confidence: motion.confidence)
+                    if (self.currentDeviceMotion != nil){
+                        if (self.oldGravity != nil){
+                            print("Old gravity: \(self.oldGravity), new gravity: \(self.currentDeviceMotion!.gravity.y)")
+                            if (self.currentDeviceMotion!.gravity.y < self.oldGravity! - 0.10){
+                                // standing
+                                self.delegate?.standingAction(confidence: motion.confidence)
+                                
+                            }
+                            else if (self.currentDeviceMotion!.gravity.y-0.10 > self.oldGravity! ){
+                                //sitting
+                                self.delegate?.sittingAction(confidence: motion.confidence)
+                            }
+                        }
+                        
+                        self.oldGravity = self.currentDeviceMotion!.gravity.y
+                        print("--Old gravity: \(self.oldGravity), new gravity: \(self.currentDeviceMotion!.gravity.y)")
+                        
+                    }else{
+                        print("Just stationary")
+                        self.delegate?.stationaryAction(confidence: motion.confidence)
+                    }
                 }
                 else if (motion.walking)
                 {
@@ -80,6 +103,7 @@ class MotionDetector: NSObject {
     func motionUpdates() -> Void{
         motionManager.deviceMotionUpdateInterval = TimeInterval(Constants.updateInterval)
         motionManager.startDeviceMotionUpdates(to: OperationQueue.current!) { (deviceMotion, error) in
+            self.currentDeviceMotion = deviceMotion
             self.delegate?.deviceMotionUpdateHandler(deviceMotion: deviceMotion)
         }
     }

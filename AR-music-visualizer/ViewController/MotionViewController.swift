@@ -99,23 +99,31 @@ extension MotionViewController: MotionDetectorDelegate{
         appendToTableView(newStuff: "Automotive, Confidence: \(confidenceMap[confidence.rawValue])")
     }
     
+    func sittingAction(confidence: CMMotionActivityConfidence) {
+        appendToTableView(newStuff: "Sitting, Confidence: \(confidenceMap[confidence.rawValue])")
+    }
+    
+    func standingAction(confidence: CMMotionActivityConfidence) {
+        appendToTableView(newStuff: "Standing, Confidence: \(confidenceMap[confidence.rawValue])")
+    }
+    
     func stationaryAction(confidence: CMMotionActivityConfidence) {
         
-        if (self.currentDeviceMotion != nil){
-            if (oldGravity != nil){
-                if (self.currentDeviceMotion!.gravity.y < oldGravity! - 0.10){
-                    // standing
-                    oldStationaryStatus = "Standing"
-                }
-                else if (self.currentDeviceMotion!.gravity.y-0.10 > oldGravity! ){
-                    //sitting
-                    oldStationaryStatus = "Sitting"
-                }
-            }
-            
-            oldGravity = self.currentDeviceMotion!.gravity.y
-        }
-        
+//        if (self.currentDeviceMotion != nil){
+//            if (oldGravity != nil){
+//                if (self.currentDeviceMotion!.gravity.y < oldGravity! - 0.10){
+//                    // standing
+//                    oldStationaryStatus = "Standing"
+//                }
+//                else if (self.currentDeviceMotion!.gravity.y-0.10 > oldGravity! ){
+//                    //sitting
+//                    oldStationaryStatus = "Sitting"
+//                }
+//            }
+//
+//            oldGravity = self.currentDeviceMotion!.gravity.y
+//        }
+//
         appendToTableView(newStuff: "\(oldStationaryStatus), Confidence: \(confidenceMap[confidence.rawValue])")
     }
     

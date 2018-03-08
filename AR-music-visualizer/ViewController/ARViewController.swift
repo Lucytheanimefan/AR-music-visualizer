@@ -280,6 +280,14 @@ extension ARViewController: SettingsDelegate {
 }
 
 extension ARViewController: MotionDetectorDelegate{
+    func standingAction(confidence: CMMotionActivityConfidence) {
+        self.debugTextView.text = "Standing"
+    }
+    
+    func sittingAction(confidence: CMMotionActivityConfidence) {
+        self.debugTextView.text = "Sitting"
+    }
+    
     func automotiveAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Automotive", self.description)
         
