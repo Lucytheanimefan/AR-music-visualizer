@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AR-music-visualizer/ViewController/ARViewController.swift"
-            timestampString = "542166769.333158"
+            timestampString = "542764418.306344"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
             landmarkName = "runningAction(confidence:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AR-music-visualizer/ViewController/ARViewController.swift"
-            timestampString = "542166769.333217"
+            timestampString = "542764418.306486"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "293"
-            endingLineNumber = "293"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "standingAction(confidence:)"
             landmarkType = "7">
          </BreakpointContent>

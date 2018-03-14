@@ -19,6 +19,8 @@ class ARViewController: UIViewController {
     var manager: ARManager!
     var nodes:[SCNNode] = [SCNNode]()
     
+    var adHocMusic:Bool = false
+    
     @IBOutlet weak var beginButton: UIBarButtonItem!
   
     @IBOutlet weak var debugTextView: UITextView!
@@ -32,7 +34,6 @@ class ARViewController: UIViewController {
         return spotLight
     }()
     
-    //let activityManager = CMMotionActivityManager()
     var motionDetector:MotionDetector!
 
     override func viewDidLoad() {
@@ -74,6 +75,8 @@ class ARViewController: UIViewController {
         }
         else{
             // Make music through motions
+            os_log("%@: Make music through motion", self.description)
+            AudioGenerator.shared.generateOscillatorsMixer(frequencies: AudioGenerator.middleCfrequencies)
         }
         
         self.beginButton.isEnabled = false

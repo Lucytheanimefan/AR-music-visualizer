@@ -15,24 +15,21 @@ import os.log
 class ViewController: UIViewController {
 
     @IBOutlet weak var visualizationButton: UIButton!
+    @IBOutlet weak var musicChooserButton: UIButton!
+    @IBOutlet weak var adhocMusicButton: UIButton!
     
     // Choosing existing music from itunes
     var mediaPicker: MPMediaPickerController?
     var myMusicPlayer: MPMusicPlayerController?
-    
-    var musicAssetURL:URL!
+    var musicAssetURL:URL?
 
     var motionDetector:MotionDetector!
+    var adHocMusic:Bool = false
     
     @IBOutlet weak var debugView: UITextView!
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.recordingSession = AVAudioSession.sharedInstance()
-
-   
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,6 +62,11 @@ class ViewController: UIViewController {
         displayMediaPicker()
     }
 
+    @IBAction func adhocMusic(_ sender: UIButton) {
+        self.musicChooserButton.isEnabled = !self.musicChooserButton.isEnabled
+        self.visualizationButton.isHidden = !self.visualizationButton.isHidden
+        self.adHocMusic = !self.adHocMusic
+    }
     
     @IBAction func goToVisualization(_ sender: UIButton) {
         performSegue(withIdentifier: "ARVisualizationSegue", sender: self)
@@ -73,6 +75,7 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let vc = segue.destination as? ARViewController{
             vc.musicFilePath = self.musicAssetURL
+            vc.adHocMusic = self.adHocMusic
         }
     }
     
@@ -81,20 +84,13 @@ class ViewController: UIViewController {
 extension ViewController: AVAudioRecorderDelegate{
     func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
         if !flag {
-            //finishRecording(success: false)
+
         }
     }
 }
 
 extension ViewController: MPMediaPickerControllerDelegate{
     func mediaPicker(_ mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
-        //        myMusicPlayer = MPMusicPlayerController()
-        //
-        //        if let player = myMusicPlayer{
-        //myMusicPlayer!.beginGeneratingPlaybackNotifications()
-        //myMusicPlayer!.setQueue(with: mediaItemCollection)
-        //
-        
         // Get the file
         let musicItem = mediaItemCollection.items[0]
         if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
