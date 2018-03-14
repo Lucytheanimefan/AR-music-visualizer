@@ -15,10 +15,6 @@ import os.log
 class ViewController: UIViewController {
 
     @IBOutlet weak var visualizationButton: UIButton!
-    // Recording music
-    @IBOutlet weak var recordButton: UIButton!
-//    var recordingSession: AVAudioSession!
-//    var audioRecorder: AVAudioRecorder!
     
     // Choosing existing music from itunes
     var mediaPicker: MPMediaPickerController?
@@ -44,64 +40,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-//    func requestRecording(){
-//        do {
-//            try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
-//            try recordingSession.setActive(true)
-//            recordingSession.requestRecordPermission() { [unowned self] allowed in
-//                DispatchQueue.main.async {
-//                    if allowed {
-//
-//                    } else {
-//                        self.presentMessage(title: "Error", message: "Failed to record")
-//                    }
-//                }
-//            }
-//        } catch {
-//            // failed to record!
-//        }
-//    }
-//
-//    func startRecording() {
-//        let audioFilename = getDocumentsDirectory().appendingPathComponent("recording.m4a")
-//
-//        let settings = [
-//            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-//            AVSampleRateKey: 12000,
-//            AVNumberOfChannelsKey: 1,
-//            AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-//        ]
-//
-//        do {
-//            audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-//            audioRecorder.delegate = self
-//            audioRecorder.record()
-//
-//            recordButton.setTitle("Tap to Stop", for: .normal)
-//        } catch {
-//            finishRecording(success: false)
-//        }
-//    }
-//
-//    func finishRecording(success: Bool){
-//        audioRecorder.stop()
-//        audioRecorder = nil
-//
-//        let title = success ? "Tap to Re-record" : "Tap to record"
-//        recordButton.setTitle(title, for: .normal)
-//
-//    }
-//
-//    @IBAction func recordAction(_ sender: UIButton) {
-//        if audioRecorder == nil
-//        {
-//            startRecording()
-//        }
-//        else
-//        {
-//            finishRecording(success: true)
-//        }
-//    }
     
     func getDocumentsDirectory() -> URL {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

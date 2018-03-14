@@ -93,7 +93,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="B9G-jI-LvM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-796" y="1329.9850074962519"/>
+            <point key="canvasLocation" x="-1554" y="1263"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="SRG-b8-Ora">
@@ -108,11 +108,28 @@
                         <segue destination="oCG-3k-bTN" kind="relationship" relationship="viewControllers" id="pu4-Ss-uBi"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="wZV-Af-3ng"/>
                         <segue destination="as0-5n-BE1" kind="relationship" relationship="viewControllers" id="t4a-iq-1lf"/>
+                        <segue destination="MQb-i5-3mi" kind="relationship" relationship="viewControllers" id="lAt-VM-2Ik"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="A8a-74-aKd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1553" y="235"/>
+        </scene>
+        <!--Music Motion Maker-->
+        <scene sceneID="dmt-sC-aeO">
+            <objects>
+                <viewController id="MQb-i5-3mi" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LuE-fj-Bzw">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="ZzP-cf-9uX"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Music Motion Maker" id="Hdw-cw-Hm1"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nww-Bs-SXk" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-621" y="-597"/>
         </scene>
         <!--Motion-->
         <scene sceneID="zXo-TC-kL7">
@@ -169,7 +186,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wue-mW-45o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-626.39999999999998" y="-592.35382308845578"/>
+            <point key="canvasLocation" x="-626" y="100"/>
         </scene>
         <!--Debug-->
         <scene sceneID="tne-QT-ifu">
@@ -179,11 +196,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eM6-sw-WRL">
-                                <rect key="frame" x="50" y="538" width="274" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Record"/>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aqC-OX-fM8">
                                 <rect key="frame" x="50" y="500" width="274" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -215,13 +227,12 @@
                     <tabBarItem key="tabBarItem" title="Debug" id="gEk-le-6si"/>
                     <connections>
                         <outlet property="debugView" destination="AFi-bJ-zTR" id="Ep5-hR-zpT"/>
-                        <outlet property="recordButton" destination="eM6-sw-WRL" id="E8g-AI-joD"/>
                         <outlet property="visualizationButton" destination="yy7-9x-FBj" id="6iX-15-kAU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-625" y="234"/>
+            <point key="canvasLocation" x="-626" y="818"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="5cH-E2-L0c">
@@ -294,7 +305,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0R5-KH-F9R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="465" y="233"/>
+            <point key="canvasLocation" x="250" y="817"/>
         </scene>
     </scenes>
 </document>

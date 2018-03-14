@@ -1,0 +1,6 @@
+framework module Pods_AR_music_visualizer {
+  umbrella header "Pods-AR-music-visualizer-umbrella.h"
+
+  export *
+  module * { export * }
+}

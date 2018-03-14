@@ -28,6 +28,8 @@
 		7CA24470200AA4D900020BFE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CA2446F200AA4D900020BFE /* Constants.swift */; };
 		7CD233DE20278C11003C5799 /* MotionDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD233DD20278C11003C5799 /* MotionDetector.swift */; };
 		7CD233E2202797F2003C5799 /* DebugView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD233E1202797F2003C5799 /* DebugView.swift */; };
+		B483513FEE703A42A76D4BAC /* Pods_AR_music_visualizer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5C959B581B965A877EFDE76 /* Pods_AR_music_visualizer.framework */; };
+		DE462CB237BC586D788DBE2F /* Pods_AR_music_visualizerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 488471DD51BB25BC61B36B3D /* Pods_AR_music_visualizerTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		036B6E4DBEBEE13A9B5D0B41 /* Pods-AR-music-visualizerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-music-visualizerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-music-visualizerTests/Pods-AR-music-visualizerTests.release.xcconfig"; sourceTree = "<group>"; };
+		387E07B9FC233A5DE454D117 /* Pods-AR-music-visualizer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-music-visualizer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-music-visualizer/Pods-AR-music-visualizer.debug.xcconfig"; sourceTree = "<group>"; };
+		488471DD51BB25BC61B36B3D /* Pods_AR_music_visualizerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_music_visualizerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C0CD4972007A4FA00F39134 /* MusicLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLoader.swift; sourceTree = "<group>"; };
 		7C0CD49B2007A86800F39134 /* FFTTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FFTTransformer.swift; sourceTree = "<group>"; };
 		7C0CD49D2007AB5900F39134 /* angel_beats_short.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = angel_beats_short.wav; sourceTree = "<group>"; };
@@ -66,6 +71,9 @@
 		7CA2446F200AA4D900020BFE /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7CD233DD20278C11003C5799 /* MotionDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionDetector.swift; sourceTree = "<group>"; };
 		7CD233E1202797F2003C5799 /* DebugView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugView.swift; sourceTree = "<group>"; };
+		8423B9FCD367A9B9797D0736 /* Pods-AR-music-visualizer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-music-visualizer.release.xcconfig"; path = "Pods/Target Support Files/Pods-AR-music-visualizer/Pods-AR-music-visualizer.release.xcconfig"; sourceTree = "<group>"; };
+		90D501013C94CBC8A4A6764B /* Pods-AR-music-visualizerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AR-music-visualizerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AR-music-visualizerTests/Pods-AR-music-visualizerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B5C959B581B965A877EFDE76 /* Pods_AR_music_visualizer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AR_music_visualizer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B483513FEE703A42A76D4BAC /* Pods_AR_music_visualizer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,12 +89,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE462CB237BC586D788DBE2F /* Pods_AR_music_visualizerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AA47E0B36206F8B93A83D77 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B5C959B581B965A877EFDE76 /* Pods_AR_music_visualizer.framework */,
+				488471DD51BB25BC61B36B3D /* Pods_AR_music_visualizerTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		688A16B9A75DA90CDA0A0047 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				387E07B9FC233A5DE454D117 /* Pods-AR-music-visualizer.debug.xcconfig */,
+				8423B9FCD367A9B9797D0736 /* Pods-AR-music-visualizer.release.xcconfig */,
+				90D501013C94CBC8A4A6764B /* Pods-AR-music-visualizerTests.debug.xcconfig */,
+				036B6E4DBEBEE13A9B5D0B41 /* Pods-AR-music-visualizerTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		7C396C7C2017BF92009E37E0 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +146,8 @@
 				7C7C1CF72003C2A600C000F2 /* AR-music-visualizer */,
 				7C7C1D0C2003C2A600C000F2 /* AR-music-visualizerTests */,
 				7C7C1CF62003C2A600C000F2 /* Products */,
+				688A16B9A75DA90CDA0A0047 /* Pods */,
+				1AA47E0B36206F8B93A83D77 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -164,9 +196,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7C7C1D122003C2A700C000F2 /* Build configuration list for PBXNativeTarget "AR-music-visualizer" */;
 			buildPhases = (
+				1EA5F8D145F87FF90AFA603D /* [CP] Check Pods Manifest.lock */,
 				7C7C1CF12003C2A600C000F2 /* Sources */,
 				7C7C1CF22003C2A600C000F2 /* Frameworks */,
 				7C7C1CF32003C2A600C000F2 /* Resources */,
+				EC18779B02747AFA4E1A2803 /* [CP] Embed Pods Frameworks */,
+				721FE5682C14B76E0ACBDC32 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -181,9 +216,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7C7C1D152003C2A700C000F2 /* Build configuration list for PBXNativeTarget "AR-music-visualizerTests" */;
 			buildPhases = (
+				C16407C889DBEC55C7B403FF /* [CP] Check Pods Manifest.lock */,
 				7C7C1D052003C2A600C000F2 /* Sources */,
 				7C7C1D062003C2A600C000F2 /* Frameworks */,
 				7C7C1D072003C2A600C000F2 /* Resources */,
+				E187236494A351B5DDD25FD7 /* [CP] Embed Pods Frameworks */,
+				7A57E81C20BB9C5E299FEA98 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -257,6 +295,110 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1EA5F8D145F87FF90AFA603D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AR-music-visualizer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		721FE5682C14B76E0ACBDC32 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-music-visualizer/Pods-AR-music-visualizer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7A57E81C20BB9C5E299FEA98 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-music-visualizerTests/Pods-AR-music-visualizerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C16407C889DBEC55C7B403FF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AR-music-visualizerTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E187236494A351B5DDD25FD7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-music-visualizerTests/Pods-AR-music-visualizerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EC18779B02747AFA4E1A2803 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-AR-music-visualizer/Pods-AR-music-visualizer-frameworks.sh",
+				"${PODS_ROOT}/AudioKit/iOS/AudioKit.framework",
+				"${PODS_ROOT}/AudioKit/iOS/AudioKitUI.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AudioKitUI.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AR-music-visualizer/Pods-AR-music-visualizer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7C7C1CF12003C2A600C000F2 /* Sources */ = {
@@ -427,6 +569,7 @@
 		};
 		7C7C1D132003C2A700C000F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 387E07B9FC233A5DE454D117 /* Pods-AR-music-visualizer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -442,6 +585,7 @@
 		};
 		7C7C1D142003C2A700C000F2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8423B9FCD367A9B9797D0736 /* Pods-AR-music-visualizer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -457,6 +601,7 @@
 		};
 		7C7C1D162003C2A700C000F2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90D501013C94CBC8A4A6764B /* Pods-AR-music-visualizerTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -474,6 +619,7 @@
 		};
 		7C7C1D172003C2A700C000F2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 036B6E4DBEBEE13A9B5D0B41 /* Pods-AR-music-visualizerTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

@@ -14,7 +14,7 @@ import CoreMotion
 class ARViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
-    var musicFilePath:URL!
+    var musicFilePath:URL?
     var musicLoader:MusicLoader!
     var manager: ARManager!
     var nodes:[SCNNode] = [SCNNode]()
@@ -68,13 +68,18 @@ class ARViewController: UIViewController {
     }
     
     @IBAction func begin(_ sender: UIBarButtonItem) {
-        self.musicLoader.begin(file: self.musicFilePath)
+        // Use existing music
+        if let file = self.musicFilePath {
+            self.musicLoader.begin(file: file)
+        }
+        else{
+            // Make music through motions
+        }
+        
         self.beginButton.isEnabled = false
         
         // Start motion stuff
         self.motionDetector.startActivityDetection()
-        //self.motionDetector.gyroScopeUpdate()
-        //self.motionDetector.accelerometerUpdates()
         self.motionDetector.motionUpdates()
         
     }
