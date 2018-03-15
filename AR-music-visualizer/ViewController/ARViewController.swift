@@ -72,8 +72,7 @@ class ARViewController: UIViewController {
         // Use existing music
         if let file = self.musicFilePath {
             self.musicLoader.begin(file: file)
-        }
-        else{
+        } else{
             // Make music through motions
             os_log("%@: Make music through motion", self.description)
             AudioGenerator.shared.generateOscillatorsMixer(frequencies: AudioGenerator.middleCfrequencies)
@@ -377,7 +376,13 @@ extension ARViewController: MotionDetectorDelegate{
     }
     
     func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?) {
-    
+        //print(deviceMotion?.gravity.y)
+        var gravity = Int(abs((deviceMotion?.gravity.y)! * 10).rounded())
+        if gravity < 0{
+            gravity = 0
+        }
+        print(gravity)
+        AudioGenerator.shared.updateOscillators(frequency: AudioGenerator.frequencyArray[gravity])
     }
     
     func accelerometerHandler(accelData: CMAccelerometerData?) {
