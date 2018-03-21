@@ -16,7 +16,6 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var visualizationButton: UIButton!
     @IBOutlet weak var musicChooserButton: UIButton!
-    @IBOutlet weak var adhocMusicButton: UIButton!
     
     // Choosing existing music from itunes
     var mediaPicker: MPMediaPickerController?
@@ -62,10 +61,9 @@ class ViewController: UIViewController {
         displayMediaPicker()
     }
 
-    @IBAction func adhocMusic(_ sender: UIButton) {
-        self.musicChooserButton.isEnabled = !self.musicChooserButton.isEnabled
-        self.visualizationButton.isHidden = !self.visualizationButton.isHidden
-        self.adHocMusic = !self.adHocMusic
+    @IBAction func adHocMusicSwitch(_ sender: UISwitch) {
+        //self.visualizationButton.isHidden = !sender.isOn
+        self.adHocMusic = sender.isOn
     }
     
     @IBAction func goToVisualization(_ sender: UIButton) {
@@ -96,7 +94,7 @@ extension ViewController: MPMediaPickerControllerDelegate{
         if let assetURL = musicItem.value(forKey: MPMediaItemPropertyAssetURL) as? URL
         {
             self.musicAssetURL = assetURL
-            self.visualizationButton.isHidden = false
+            //self.visualizationButton.isHidden = false
             self.debugView.text = assetURL.absoluteString
         }
         

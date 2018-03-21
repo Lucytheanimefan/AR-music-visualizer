@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AudioKit
 import ARKit
 import os.log
 import CoreMotion
@@ -24,6 +25,8 @@ class ARViewController: UIViewController {
     @IBOutlet weak var beginButton: UIBarButtonItem!
   
     @IBOutlet weak var debugTextView: UITextView!
+    
+    let audioGenerator = AudioGenerator.shared
     
     fileprivate lazy var spotLight: SCNLight = {
         let spotLight = SCNLight()
@@ -69,8 +72,17 @@ class ARViewController: UIViewController {
     }
     
     @IBAction func begin(_ sender: UIBarButtonItem) {
-        // Use existing music
-        if let file = self.musicFilePath {
+        if (adHocMusic && self.musicFilePath != nil){
+            // Alter music through motions
+            os_log("%@: Alter music through motion", self.description)
+            let fileNode = audioGenerator.audioFileNode(url: self.musicFilePath!)
+            let delayNode = audioGenerator.delay(rampTime: 0)
+            audioGenerator.setOutput(nodes: [fileNode!, delayNode])
+            
+        }
+        else if let file = self.musicFilePath {
+            os_log("%@: Existing music", self.description)
+            // Use existing music
             self.musicLoader.begin(file: file)
         } else{
             // Make music through motions
@@ -180,25 +192,11 @@ class ARViewController: UIViewController {
         addNodeToScene(node: node)
         return node
     }
-
     
     func addNodeToScene(node:SCNNode){
         self.sceneView.scene.rootNode.addChildNode(node)
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        let touch = touches.first!
-//        let location = touch.location(in: sceneView)
-//        let hitResults = sceneView.hitTest(location, types: [.existingPlaneUsingExtent, .featurePoint])
-//        if hitResults.count > 0 {
-//            let result: ARHitTestResult = hitResults.first!
-//            let newLocation = SCNVector3Make(result.worldTransform.columns.3.x, result.worldTransform.columns.3.y/3, result.worldTransform.columns.3.z)
-//            //addParticleNode(position: newLocation)
-//            addSphereNode(position: newLocation)
-//        }
-//    }
-    
-
 }
 
 extension ARViewController: MusicLoaderDelegate{
@@ -228,10 +226,7 @@ extension ARViewController: MusicLoaderDelegate{
         guard nodes.count > index else {
             return
         }
-        
         let node = nodes[index]
-        
-        
         if let shape = node.geometry as? SCNShape{
             FigureManager.animateRibbon(shape: shape, magnitude: CGFloat(magnitude*100000))
         }
@@ -314,8 +309,6 @@ extension ARViewController: MotionDetectorDelegate{
     
     func stationaryAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: stationary", self.description)
-        
-        //appendAttributedDebugText(text: "Stationary")
         self.changeNodeColor(nodes: self.nodes, color: .blue)
         
     }
@@ -345,44 +338,32 @@ extension ARViewController: MotionDetectorDelegate{
     
     func unknownAction(confidence: CMMotionActivityConfidence) {
         os_log("%@: Unknown", self.description)
-        
         self.debugTextView.text = "Unknown"
         self.changeNodeColor(nodes: self.nodes, color: .white)
-        
     }
     
     func gyroScopeHandler(data: CMGyroData?) {
-//        self.nodes.forEach { (node) in
-//            if let data = data{
-//                //node.position = SCNVector3Make(Float(data.rotationRate.x), Float(data.rotationRate.y), Float(data.rotationRate.z))
-//                if let sphere = node.geometry as? SCNSphere{
-//                    let maxRot = abs(max(max(data.rotationRate.x, data.rotationRate.y), data.rotationRate.z))
-//                    sphere.segmentCount = Int(1/maxRot)
-//                    //self.debugTextView.text = ("Max rot: \(maxRot)")
-//                }
-//            }
-//        }
-        
-//        if let data = data{
-//            let x = abs(data.rotationRate.x)
-//            let y = abs(data.rotationRate.y)
-//            let z = abs(data.rotationRate.z)
-//            let r = (x < 1) ? x*265:x
-//            let g = (y < 1) ? y*265:y
-//            let b = (z < 1) ? z*265:z
-//            let color = UIColor(red: CGFloat(r), green: CGFloat(g), blue: CGFloat(b), alpha: 1)
-//            self.changeNodeColor(nodes: self.nodes, color: color)
-//        }
     }
     
     func deviceMotionUpdateHandler(deviceMotion: CMDeviceMotion?) {
-        //print(deviceMotion?.gravity.y)
         var gravity = Int(abs((deviceMotion?.gravity.y)! * 10).rounded())
         if gravity < 0{
             gravity = 0
         }
-        print(gravity)
-        AudioGenerator.shared.updateOscillators(frequency: AudioGenerator.frequencyArray[gravity])
+        
+        if (adHocMusic)
+        {
+            audioGenerator.nodes.forEach { (node) in
+                if let rampNode = node as? AKBooster{
+                    print("Set rampNode gain")
+                    rampNode.gain = (deviceMotion?.gravity.y)!
+                }
+            }
+        }
+        else if (self.musicFilePath == nil)
+        {
+            AudioGenerator.shared.updateOscillators(frequency: AudioGenerator.frequencyArray[gravity])
+        }
     }
     
     func accelerometerHandler(accelData: CMAccelerometerData?) {

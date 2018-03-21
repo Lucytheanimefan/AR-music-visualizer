@@ -30,10 +30,53 @@ class AudioGenerator: NSObject {
     
     var oscillators:[AKOscillator]!
     
+    var nodes:[AKNode] = [AKNode]()
+    
     var envelope:AKAmplitudeEnvelope!
     
     override init() {
         super.init()
+    }
+    
+    func delay(rampTime:Double) -> AKNode{
+        let filter = AKMoogLadder(AKMicrophone())
+        let delay = AKVariableDelay(filter)
+        delay.rampTime = rampTime
+        let delayMixer = AKDryWetMixer(filter, delay)
+        let reverb = AKCostelloReverb(delayMixer)
+        let reverbMixer = AKDryWetMixer(delayMixer, reverb)
+        let booster = AKBooster(reverbMixer)
+        return booster
+    }
+    
+    func audioFileNode(url:URL)->AKNode?{
+        do{
+            let file = try AKAudioFile(forReading: url)
+            let player = try AKAudioPlayer(file: file)
+            player.looping = true
+            return player
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    func setOutput(nodes:[AKNode]){
+        var audioFileNode:AKAudioPlayer?
+        let mixer = AKMixer()
+        nodes.forEach { (node) in
+            self.nodes.append(node)
+            if let fileNode = node as? AKAudioPlayer{
+                audioFileNode = fileNode
+            }
+            mixer.connect(input: node)
+        }
+        AudioKit.output = mixer
+        AudioKit.start()
+        if (audioFileNode != nil){
+            audioFileNode?.play()
+        }
+        mixer.start()
     }
     
     func generateOscillatorsMixer(frequencies:[Double]){
