@@ -11,6 +11,7 @@ import Foundation
 struct Constants{
     static let FRAME_COUNT = 64
     static let updateInterval:TimeInterval = 0.9
+    static let FFT_SAMPLE_SIZE = 16
     
     struct Notes{
         static let Db3 = 138.59

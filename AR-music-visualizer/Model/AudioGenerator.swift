@@ -34,9 +34,12 @@ class AudioGenerator: NSObject {
     
     var envelope:AKAmplitudeEnvelope!
     
+    var fft:AKFFTTap?
+    
     override init() {
         super.init()
     }
+    
     
     func delay(rampTime:Double) -> AKNode{
         let filter = AKMoogLadder(AKMicrophone())
@@ -91,10 +94,22 @@ class AudioGenerator: NSObject {
         applyEnvelope(node: mixer)
     }
     
-    func updateOscillators(frequency:Double){
-        let frequencies = (1...5).map { $0 * frequency }
+    func updateOscillators(frequency:Double = Constants.Notes.C4, frequenciesArr:[Double]? = nil){
+        var frequencies:[Double]!
+        if (frequenciesArr == nil){
+            frequencies = (1...5).map { $0 * frequency }
+        }
+        else{
+            frequencies = frequenciesArr
+        }
         
+        guard frequencies.count == 5 else {
+            print("Wrong length: \(frequencies.count)")
+            return
+        }
+        //print("---")
         for (index, frequency) in frequencies.enumerated(){
+            //print("Frequency: \(frequency)")
             self.oscillators[index].frequency = frequency
         }
     }
@@ -116,6 +131,7 @@ class AudioGenerator: NSObject {
         AudioKit.output = envelope
         AudioKit.start()
         envelope.start()
+        self.fft = AKFFTTap(envelope)
         print("Started AudioKit audio")
     }
     

@@ -28,6 +28,7 @@ class ARViewController: UIViewController {
     
     let audioGenerator = AudioGenerator.shared
     
+    var timer:Timer!
     fileprivate lazy var spotLight: SCNLight = {
         let spotLight = SCNLight()
         spotLight.type = .spot
@@ -87,7 +88,8 @@ class ARViewController: UIViewController {
         } else{
             // Make music through motions
             os_log("%@: Make music through motion", self.description)
-            AudioGenerator.shared.generateOscillatorsMixer(frequencies: AudioGenerator.middleCfrequencies)
+            audioGenerator.generateOscillatorsMixer(frequencies: AudioGenerator.middleCfrequencies)
+            pollAKFFT()
         }
         
         self.beginButton.isEnabled = false
@@ -197,6 +199,24 @@ class ARViewController: UIViewController {
         self.sceneView.scene.rootNode.addChildNode(node)
     }
     
+    func pollAKFFT(){
+        self.timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { (timer) in
+            if let fft = self.audioGenerator.fft{
+                for (i, node) in self.nodes.enumerated(){
+                    self.updateNodeScalesWithFFT(index: i, magnitude: Float(fft.fftData.max()!))
+                }
+                //Sample the fft
+//                let interval = Constants.FFT_SAMPLE_SIZE//fft.fftData.count/self.nodes.count
+//                var count = 0;
+//                for element in fft.fftData.enumerated() where element.offset % interval == 0 {
+//                    let (_, magnitude) = element
+//                    self.updateNodeScalesWithFFT(index: count, magnitude: Float(magnitude))
+//                    count += 1
+//                }
+            }
+        }
+    }
+    
 }
 
 extension ARViewController: MusicLoaderDelegate{
@@ -238,6 +258,7 @@ extension ARViewController: MusicLoaderDelegate{
         let m = magnitude*10
         
         let s = SCNVector3Make(m, m, m)
+        print("Node: \(index), Scale: \(s)")
         nodes[index].scale = s
         
     }
@@ -362,7 +383,9 @@ extension ARViewController: MotionDetectorDelegate{
         }
         else if (self.musicFilePath == nil)
         {
-            AudioGenerator.shared.updateOscillators(frequency: AudioGenerator.frequencyArray[gravity])
+            let freq = AudioGenerator.frequencyArray[gravity]
+           
+            audioGenerator.updateOscillators(frequenciesArr: [0.25 * freq, 0.5 * freq, freq, 2*freq, 4*freq])
         }
     }
     
@@ -397,3 +420,5 @@ extension UITextView{
         }
     }
 }
+
+
